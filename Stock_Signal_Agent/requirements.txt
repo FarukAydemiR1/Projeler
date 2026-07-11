@@ -1,0 +1,9 @@
+pandas>=1.5
+numpy>=1.23
+scikit-learn>=1.3
+requests>=2.28
+PyYAML>=6.0
+joblib>=1.2
+# Opsiyonel: canlı veri için alternatif kaynak (proje kendi requests tabanlı
+# çekicisini kullanır, yfinance zorunlu değildir).
+# yfinance>=0.2
