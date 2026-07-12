@@ -1,0 +1,75 @@
+# Viral Urun Kesif Ajani — calisma ayarlari.
+# Agirliklar kod degismeden buradan ayarlanir; toplamlarin 1.0 olmasi gerekmez
+# (scorer normalize eder) ama okunabilirlik icin ~1.0 tutmak iyi pratiktir.
+
+run:
+  max_candidates: 60        # kesif sonrasi isleme alinacak en fazla aday
+  top_ads: 5                # reklam konsepti uretilecek urun sayisi
+  report_language: tr
+
+sources:
+  reddit:
+    enabled: true
+    subreddits:
+      - shutupandtakemymoney
+      - gadgets
+      - INEEEEDIT
+      - ofcoursethatsathing
+      - DidntKnowIWantedThat
+    listing: top             # top | hot | new
+    timeframe: month
+    limit_per_sub: 25
+  producthunt:
+    enabled: true            # PRODUCTHUNT_TOKEN yoksa otomatik devre disi
+    limit: 25
+  google_trends:
+    enabled: true            # pytrends kirilgandir; hata olursa run durmaz
+    geo: TR
+  rss_feeds:
+    enabled: true
+    feeds:
+      - https://www.yankodesign.com/feed/
+      - https://thegadgetflow.com/feed/
+      - https://www.kickstarter.com/projects/feed.atom
+    limit_per_feed: 20
+  web_search:
+    enabled: true            # DuckDuckGo HTML uzerinden; engellenirse sessizce bos doner
+    queries:
+      - "viral tiktok gadget 2026"
+      - "trending amazon finds this month"
+      - "new problem solving gadget everyone is buying"
+      - "viral home gadget aliexpress trending"
+      - "stress relief gadget trending"
+
+turkey_availability:
+  enabled: true
+  marketplaces:              # site-hedefli arama yapilan TR pazar yerleri
+    - trendyol.com
+    - hepsiburada.com
+    - amazon.com.tr
+    - n11.com
+  novelty_gate: 0.35         # novelty_absence bu esigin ALTINDAYSA urun elenir (TR'de zaten yaygin)
+
+weights:
+  # Katman A — deterministik sinyaller (0..1)
+  novelty_absence: 0.20
+  trend_momentum: 0.12
+  cross_source_corroboration: 0.04
+  price_fit_tr: 0.10
+  margin_proxy: 0.04
+  # Katman B — LLM boyutlari (0..10, /10 normalize edilir)
+  problem_or_emotion: 0.12
+  demonstrability: 0.15
+  cultural_fit_tr: 0.10
+  seasonality: 0.05
+  shareability: 0.08
+  sourcing_feasibility: 0.00  # MVP'de bilgi az; Faz 2'de artir
+
+price_fit_tr:
+  # Impuls-alim tatli noktasi (TL perakende). Kaynak fiyati USD ise kur ile cevrilir.
+  ideal_min_try: 150
+  ideal_max_try: 600
+  usd_to_try: 48.0            # kaba kur; raporda "tahmini" olarak isaretlenir
+
+cache:
+  ttl_hours: 24

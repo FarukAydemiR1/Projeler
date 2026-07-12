@@ -1,0 +1,21 @@
+{
+  "_meta": "Bu rubric 2026-07-12'de gercek web arastirmasiyla (Claude oturumu) uretildi; trait_miner.py ile yeniden uretilebilir veya elle duzeltilebilir.",
+  "traits": [
+    "5-15 saniyelik dikey videoda CALISIRKEN gosterilebilir olmak — tek bakista anlasilan 'vay be' ani (en guclu ortak ozellik)",
+    "Ya gunluk hayattaki bir mikro-sorunu aninda cozer (surtunmeyi kaldirir) ya da guclu bir duyguya hizmet eder (stres, estetik, statu, merak/surpriz)",
+    "Kurulum/uygulama/sarj karmasasi olmadan ANINDA calisir — 2026'da tuketici 'app isteyen akilli cihaz'dan yoruldu",
+    "Impuls-alim fiyat bandinda (TR icin ~150-600 TL tatli nokta) veya 'kendine kucuk odul' anlatisina uyar",
+    "Hediye edilebilir — TR'de bayram/anneler gunu/yilbasi carpani",
+    "Oncesi/sonrasi veya karsilastirma cekimine uygun (donusum gorsel olarak kanitlanabilir)",
+    "Stoklarin tukenmesi/kitlik hikayesi viral dongulari besliyor (launch -> spike -> backorder)",
+    "Asya'da (Japonya/Kore) ana-akim olup Bati'ya/TR'ye henuz gelmemis urunler 6-18 ay onden sinyal verir"
+  ],
+  "dimensions": [
+    {"name": "problem_or_emotion", "definition": "Gercek bir derdi cozuyor VEYA guclu duygusal ihtiyaca hizmet ediyor", "guide": "9-10: her gun yasanan dert + aninda cozum; 5-6: hos ama vazgecilebilir; 0-2: cozdugu sorun yok"},
+    {"name": "demonstrability", "definition": "5-15 sn dikey videoda calisirken 'vay be' dedirtme gucu", "guide": "9-10: tek cekimde anlasilir + gorsel donusum; 5: anlatim gerektirir; 0-2: gosterilemez"},
+    {"name": "cultural_fit_tr", "definition": "Turk zevki, hediyelesme, mizah, iklim ve hassasiyetlerle uyum", "guide": "9-10: TR'ye ozel guclu acisi var (sicak yaz, cay, misafir kulturu); 0-2: kulturel uyumsuz/riskli"},
+    {"name": "seasonality", "definition": "Onumuzdeki TR takvimiyle uyum (yaz, okul, bayram, yilbasi)", "guide": "9-10: tam sezonunda; 5: sezondan bagimsiz; 0-2: sezonu gecmis"},
+    {"name": "shareability", "definition": "Etiketleme/hediye/meme potansiyeli", "guide": "9-10: 'bunu gorunce seni dusundum' etkisi; 0-2: paylasma nedeni yok"},
+    {"name": "sourcing_feasibility", "definition": "AliExpress/1688 tedarik kolayligi; IP/regulasyon engeli yoklugu", "guide": "9-10: jenerik, cok satici; 3-4: tek marka/IP riski; 0-2: regulasyon engeli (pil/saglik sertifikasi vb.)"}
+  ]
+}

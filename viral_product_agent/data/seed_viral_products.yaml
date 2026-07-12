@@ -1,0 +1,48 @@
+# Trait-mining icin tohum: son yillarda viral olmus urun ornekleri + neden viral olduklari.
+# Bu liste elle genisletilebilir; trait_miner bunlardan rubric.json uretir.
+viral_products:
+  - name: Fidget spinner / pop-it
+    why_bought: stres/anksiyete giderme, elde oynama durtusu, okulda akran etkisi
+    ad_pattern: tatmin edici (satisfying) yakin cekim dongu videolar
+    price_band_usd: 2-10
+    size: kucuk
+  - name: Mini termal yazici (cep yazicisi)
+    why_bought: not/etiket/fotograf cikti yeniligi, ders calisma estetigi (studygram)
+    ad_pattern: "bak ne cikardim" gosterimi, ogrenci masasi kurulumu
+    price_band_usd: 20-40
+    size: kucuk
+  - name: Gunes dogumu simulasyon lambasi (sunset lamp)
+    why_bought: oda estetigi, sosyal medya fotograf arka plani
+    ad_pattern: oda donusumu oncesi/sonrasi, golge oyunu
+    price_band_usd: 10-25
+    size: kucuk
+  - name: Elektrikli boyun/omuz masaj aleti
+    why_bought: ofis yorgunlugu, hediye (anne/baba), agri cozumu
+    ad_pattern: kullanan kisinin rahatlama mimigi, hediye acilisi
+    price_band_usd: 25-60
+    size: orta
+  - name: Akilli su matarasi / motivasyonlu matara
+    why_bought: saglik trendi, gunluk su takibi, estetik
+    ad_pattern: gunluk rutin vlog entegrasyonu
+    price_band_usd: 15-35
+    size: orta
+  - name: Mini el blenderi / tasinabilir smoothie sisesi
+    why_bought: pratiklik, saglikli yasam, ofiste kullanim
+    ad_pattern: 10 saniyede smoothie gosterimi
+    price_band_usd: 15-30
+    size: orta
+  - name: Robot supurge (giris seviyesi)
+    why_bought: zaman kazanimi, "evde kendi kendine calisiyor" buyusu
+    ad_pattern: evcil hayvan + robot etkilesimi, oncesi/sonrasi zemin
+    price_band_usd: 80-200
+    size: buyuk
+  - name: Bogaz/percussion masaj tabancasi
+    why_bought: spor sonrasi toparlanma, kas agrisi, hediye
+    ad_pattern: titresimli yakin cekim + sporcu onayi
+    price_band_usd: 30-80
+    size: orta
+common_notes:
+  - "Ortak oruntu: 5-15 saniyede calisirken GOSTERILEBILIR olmak (demonstrability)"
+  - "Ya gercek bir mikro-sorun cozer ya guclu bir duyguya (stres, estetik, statu) hizmet eder"
+  - "Impuls-alim fiyat bandinda olmak paylasimi satisa cevirir"
+  - "Hediye edilebilirlik TR pazarinda ekstra carpan (bayram, anneler gunu)"
