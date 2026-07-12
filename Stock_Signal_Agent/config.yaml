@@ -60,3 +60,10 @@ scan_period: 1y
 
 # Tarama sinyal eşiği
 min_score: 0.45
+
+# Telegram bildirimi (opsiyonel)
+# Token'ı GÜVENLİK için buraya YAZMA; ortam değişkeni kullan:
+#   export TELEGRAM_BOT_TOKEN="123456:ABC-..."
+#   export TELEGRAM_CHAT_ID="987654321"   (veya aşağıya chat_id yaz)
+telegram:
+  chat_id: null

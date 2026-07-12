@@ -22,6 +22,7 @@ from .model import SignalModel
 from .screener import Screener
 from .backtest import backtest_rule_score
 from .features import latest_feature_row
+from .notify import TelegramNotifier, format_report, deliver_report
 from .rules import score_rules
 
 
@@ -127,6 +128,58 @@ def cmd_explain(args):
             print(f"   {k:<20}: {v:+.4f}")
 
 
+def cmd_daily(args):
+    """Günlük rutin: (gerekirse eğit) → tara → raporu Telegram'a/konsola ilet."""
+    cfg = cfgmod.load_config(args.config)
+    symbols = _resolve_symbols(args, cfg)
+    source = "synthetic" if args.synthetic else args.source
+
+    model = None
+    model_path = Path(args.model) if args.model else Path("signal_model.joblib")
+    if model_path.exists():
+        model = SignalModel.load(model_path)
+        print(f"[daily] model yüklendi: {model_path}")
+    elif args.train_if_missing:
+        print(f"[daily] model yok, eğitiliyor ({len(symbols)} sembol)...")
+        X, y, *_ = build_training_set(
+            symbols, source=source, period=cfg["train_period"],
+            horizon=cfg["horizon"], threshold=cfg["rise_threshold"],
+            csv_dir=args.csv_dir,
+            fallback_synthetic=args.synthetic or args.fallback_synthetic,
+            verbose=False,
+        )
+        model = SignalModel()
+        model.train(X, y, compute_importance=False)
+        model.save(model_path)
+        print(f"[daily] model eğitildi ve kaydedildi: {model_path}")
+    else:
+        print("[daily] model bulunamadı, sadece kural modu (eğitmek için --train-if-missing)")
+
+    screener = Screener(
+        model=model,
+        model_weight=cfg["model_weight"], rule_weight=cfg["rule_weight"],
+        source=source, period=args.period or cfg["scan_period"],
+        csv_dir=args.csv_dir, fallback_synthetic=args.synthetic or args.fallback_synthetic,
+    )
+    all_sigs = [screener.evaluate(s) for s in symbols]
+    errored = [s for s in all_sigs if s.error]
+    signals = sorted((s for s in all_sigs if s.error is None),
+                     key=lambda s: s.score, reverse=True)
+    if errored:
+        print(f"[daily] veri alınamayan semboller: {[s.symbol for s in errored]}")
+    if not signals:
+        print("[daily] HATA: hiçbir sembol için veri alınamadı — rapor gönderilmiyor.")
+        sys.exit(1)
+
+    min_score = args.min_score if args.min_score is not None else cfg["min_score"]
+    tg_cfg = cfg.get("telegram") or {}
+    notifier = TelegramNotifier(chat_id=tg_cfg.get("chat_id"))
+    report = format_report(signals, min_score=min_score,
+                           title=f"Hisse Sinyal Raporu ({args.market})")
+    where = deliver_report(report, telegram=notifier)
+    print(f"\n[daily] rapor iletildi → {where}")
+
+
 def cmd_backtest(args):
     cfg = cfgmod.load_config(args.config)
     source = "synthetic" if args.synthetic else args.source
@@ -179,6 +232,15 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--symbol", required=True)
     sp.add_argument("--model", default=None)
     sp.set_defaults(func=cmd_explain)
+
+    sp = sub.add_parser("daily", help="günlük rutin: tara + Telegram/konsol raporu")
+    common(sp)
+    sp.add_argument("--model", default=None,
+                    help="model yolu (varsayılan: signal_model.joblib)")
+    sp.add_argument("--min-score", type=float, default=None, help="rapor sinyal eşiği")
+    sp.add_argument("--train-if-missing", action="store_true",
+                    help="model dosyası yoksa önce eğit")
+    sp.set_defaults(func=cmd_daily)
 
     sp = sub.add_parser("backtest", help="kural sinyalini geçmişte test et")
     common(sp)

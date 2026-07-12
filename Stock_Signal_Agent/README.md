@@ -99,6 +99,41 @@ python -m stock_signal_agent.cli backtest --symbol AAPL --threshold 0.5
 Sinyal verilen günlerde `horizon` gün sonraki isabet oranını ve ortalama
 getiriyi, taban (baseline) ile kıyaslayarak gösterir.
 
+### 5) Günlük rutin: tara + Telegram bildirimi
+
+```bash
+python -m stock_signal_agent.cli daily --market all --train-if-missing
+```
+
+Tek komutla izleme listesini tarar, raporu oluşturur ve Telegram'a gönderir
+(yapılandırılmamışsa konsola basar). `--train-if-missing` model dosyası yoksa
+önce eğitir.
+
+**Telegram kurulumu:**
+
+1. Telegram'da **@BotFather**'a `/newbot` yaz, bot token'ını al.
+2. Botunla bir konuşma başlat (herhangi bir mesaj gönder), sonra chat id'ni öğren:
+   `https://api.telegram.org/bot<TOKEN>/getUpdates` → `chat.id`
+3. Ortam değişkenlerini ver (token'ı asla config dosyasına yazma):
+
+```bash
+export TELEGRAM_BOT_TOKEN="123456:ABC-..."
+export TELEGRAM_CHAT_ID="987654321"
+python -m stock_signal_agent.cli daily --market bist
+```
+
+**Otomatik günlük çalıştırma:** Repo, her iş günü 18:17 TSİ'de taramayı çalıştırıp
+Telegram'a gönderen bir GitHub Actions workflow'u içerir
+(`.github/workflows/daily_scan.yml`). Aktifleştirmek için repo ayarlarından iki
+secret eklemen yeterli: **Settings → Secrets and variables → Actions** →
+`TELEGRAM_BOT_TOKEN` ve `TELEGRAM_CHAT_ID`. İstersen **Actions** sekmesinden
+"Daily Stock Signal Scan" workflow'unu elle de tetikleyebilirsin
+(workflow_dispatch). Kendi makinende cron da kullanabilirsin:
+
+```cron
+17 18 * * 1-5  cd /path/to/Projeler/Stock_Signal_Agent && python -m stock_signal_agent.cli daily --market all --train-if-missing
+```
+
 ### İnternet yoksa? (sentetik demo)
 
 Her komuta `--synthetic` ekleyerek sentetik veriyle deneyebilirsin; ya da canlı
@@ -161,6 +196,7 @@ Stock_Signal_Agent/
 │   ├── rules.py                # anlaşılır kural motoru
 │   ├── screener.py             # model + kural → sinyal
 │   ├── backtest.py             # ileri-yönlü backtest
+│   ├── notify.py               # rapor formatı + Telegram bildirimi
 │   └── cli.py                  # komut satırı arayüzü
 └── tests/
     └── test_agent.py           # sentetik veriyle uçtan uca testler
@@ -180,5 +216,4 @@ Testler tamamen sentetik veriyle çalışır — internet gerektirmez.
 
 - Sektör/endeks görece güç (relative strength) özelliği
 - Temel veri (kazanç sürprizi, F/K) katmanı
-- Telegram/e-posta bildirimi ile günlük otomatik tarama
 - Pozisyon boyutlandırma + stop-loss öneren risk katmanı
