@@ -71,5 +71,13 @@ price_fit_tr:
   ideal_max_try: 600
   usd_to_try: 48.0            # kaba kur; raporda "tahmini" olarak isaretlenir
 
+telegram:
+  push_top_n: 5              # botun gonderecegi en iyi urun sayisi
+  send_images: true          # urun gorseli varsa foto olarak gonder
+  parse_mode: HTML           # mesaj bicimi (HTML kacisli)
+  daily_scan:
+    enabled: false           # true ise bot her gun otomatik tarayip gonderir
+    hour: 9                  # gunun saati (0-23, sunucunun yerel saati)
+
 cache:
   ttl_hours: 24

@@ -37,6 +37,10 @@ class Candidate:
     def to_dict(self) -> dict:
         return asdict(self)
 
+    @classmethod
+    def from_dict(cls, d: dict) -> "Candidate":
+        return cls(**{k: v for k, v in d.items() if k in cls.__dataclass_fields__})
+
 
 @dataclass
 class AdConcept:
@@ -47,6 +51,10 @@ class AdConcept:
     audience: str = ""          # TR hedef kitle tanimi
     note: str = ""
 
+    @classmethod
+    def from_dict(cls, d: dict) -> "AdConcept":
+        return cls(**{k: v for k, v in d.items() if k in cls.__dataclass_fields__})
+
 
 @dataclass
 class Report:
@@ -56,3 +64,14 @@ class Report:
     ads: list[AdConcept] = field(default_factory=list)
     source_status: dict[str, str] = field(default_factory=dict)   # kaynak -> ok/hata/devre disi
     notes: list[str] = field(default_factory=list)
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Report":
+        return cls(
+            generated_at=d.get("generated_at", ""),
+            ranked=[Candidate.from_dict(c) for c in d.get("ranked", [])],
+            eliminated=[Candidate.from_dict(c) for c in d.get("eliminated", [])],
+            ads=[AdConcept.from_dict(a) for a in d.get("ads", [])],
+            source_status=d.get("source_status", {}),
+            notes=d.get("notes", []),
+        )

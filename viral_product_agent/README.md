@@ -41,6 +41,45 @@ python run.py --inject-test  # Türkiye kapısını bilinen yaygın ürünle tes
 
 Çıktı: `output/YYYY-MM-DD_report.md` (insan için, Türkçe) + `.json` (makine için).
 
+## Telegram Botu (@UrunuTAkibiBot)
+
+Ajan bulduğu ürünleri ve reklam konseptlerini **Telegram'dan telefonuna** gönderebilir;
+telefondan `/tara` yazarak anlık tarama başlatabilir, ürünleri buton menüsüyle gezebilirsin.
+
+**Kurulum:**
+1. [@BotFather](https://t.me/BotFather)'dan bir bot oluştur ve **token** al.
+   > ⚠️ **Token'ı kimseyle paylaşma, sohbete yapıştırma.** Sızarsa @BotFather → `/revoke`
+   > ile hemen iptal edip yenisini al. Token yalnızca `.env`'de durur, git'e **asla** girmez.
+2. `.env` dosyasına ekle:
+   ```
+   TELEGRAM_BOT_TOKEN=BotFather'dan_aldığın_token
+   TELEGRAM_CHAT_ID=            # aşağıda /start ile öğreneceksin
+   TELEGRAM_ALLOWED_USERS=      # (opsiyonel) botu kullanabilecek ek kullanıcı id'leri
+   ```
+3. Botu başlat: `python bot.py`
+4. Telegram'da botuna `/start` yaz → sana **sohbet id'ni** söyler → onu `.env`'deki
+   `TELEGRAM_CHAT_ID`'ye yaz (otomatik gönderim ve günlük tarama bunu kullanır).
+
+**Komutlar:**
+| Komut | Ne yapar |
+|---|---|
+| `/tara` | Yeni tarama başlatır, en iyi ürünleri + reklam konseptlerini gönderir |
+| `/liste` | Son taramanın ürünlerini buton menüsüyle gezersin (dokun → detay + reklam) |
+| `/rapor` | Son raporu `.md` dosyası olarak gönderir |
+| `/help` | Komut listesi + sohbet id'n |
+
+**Otomatik günlük tarama:** `config.yaml` → `telegram.daily_scan.enabled: true` ve `hour`
+ayarlanırsa bot her gün o saatte tarayıp sonucu `TELEGRAM_CHAT_ID`'ye gönderir (bot açık kalmalı).
+
+**Tek seferlik push (bot'suz):** `python run.py --telegram` → tarama yapıp raporu Telegram'a gönderir
+(cron/zamanlayıcıya uygun).
+
+**Güvenlik:** Botu yalnızca yetkili kullanıcılar (`TELEGRAM_CHAT_ID` / `TELEGRAM_ALLOWED_USERS`)
+komutlayabilir; yabancılar `/tara` ile tarama tetikleyemez.
+
+**Not:** Bot uzun süreli bir süreçtir — kendi bilgisayarında/sunucunda çalıştır. Kaynaklar
+(Reddit/arama) ev/ofis IP'sinde bulut sunuculara göre çok daha iyi çalışır.
+
 ## API anahtarı olmadan çalışır mı?
 
 **Evet.** `ANTHROPIC_API_KEY` yoksa (veya `--no-llm` verilirse):
