@@ -1,0 +1,69 @@
+# Stock Signal Agent yapılandırması
+# Kendi izleme listeni ve parametrelerini buradan değiştir.
+
+# İzleme listeleri
+bist:
+  - THYAO.IS
+  - ASELS.IS
+  - SISE.IS
+  - KCHOL.IS
+  - EREGL.IS
+  - GARAN.IS
+  - AKBNK.IS
+  - TUPRS.IS
+  - BIMAS.IS
+  - FROTO.IS
+  - SAHOL.IS
+  - PGSUS.IS
+  - TCELL.IS
+  - ISCTR.IS
+  - YKBNK.IS
+  - TOASO.IS
+  - KRDMD.IS
+  - PETKM.IS
+  - HEKTS.IS
+  - OYAKC.IS
+
+us:
+  - AAPL
+  - MSFT
+  - NVDA
+  - AMD
+  - TSLA
+  - AMZN
+  - META
+  - GOOGL
+  - NFLX
+  - AVGO
+  - PLTR
+  - SMCI
+  - CRM
+  - UBER
+  - COIN
+  - SHOP
+  - MU
+  - INTC
+  - QCOM
+  - ARM
+
+# "Yükseliş olayı" tanımı ve sinyal parametreleri
+horizon: 10            # kaç iş günü ileriye bakılıyor
+rise_threshold: 0.08   # yükseliş sayılması için gereken getiri (%8)
+
+# Model ve kural skorunun birleşim ağırlıkları (toplamı 1 olmalı)
+model_weight: 0.6
+rule_weight: 0.4
+
+# Veri aralıkları
+train_period: 5y
+scan_period: 1y
+
+# Tarama sinyal eşiği
+min_score: 0.45
+
+# Telegram bildirimi (opsiyonel)
+# Token'ı GÜVENLİK için buraya YAZMA; ortam değişkeni kullan:
+#   export TELEGRAM_BOT_TOKEN="123456:ABC-..."
+#   export TELEGRAM_CHAT_ID="987654321"   (veya aşağıya chat_id yaz)
+telegram:
+  chat_id: null
