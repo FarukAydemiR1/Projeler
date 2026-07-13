@@ -19,6 +19,7 @@ __version__ = "0.1.0"
 from .data import load_prices, DataError
 from .screener import Screener, Signal
 from .model import SignalModel
+from .config import load_config, load_dotenv
 
 __all__ = [
     "load_prices",
@@ -26,5 +27,7 @@ __all__ = [
     "Screener",
     "Signal",
     "SignalModel",
+    "load_config",
+    "load_dotenv",
     "__version__",
 ]

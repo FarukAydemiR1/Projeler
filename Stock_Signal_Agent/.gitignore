@@ -15,3 +15,9 @@ signal_model.joblib
 *.csv
 !tests/**/*.csv
 data/
+
+# Gizli bilgiler — token/anahtarlar ASLA repoya girmemeli
+.env
+.env.local
+.env.*
+!.env.example
