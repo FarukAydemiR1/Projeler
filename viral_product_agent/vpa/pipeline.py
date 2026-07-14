@@ -9,6 +9,7 @@ from __future__ import annotations
 from datetime import date
 
 from .models import Candidate, Report
+from .history import HistoryStore
 from .sources.reddit import RedditSource
 from .sources.producthunt import ProductHuntSource
 from .sources.rss_feeds import RssSource
@@ -16,6 +17,7 @@ from .sources.google_trends import GoogleTrendsSource
 from .sources.web_search import WebSearchSource
 from .filters import dedup as dedup_mod
 from .filters import turkey_availability
+from .filters import sellable
 from .scoring import signals, scorer
 from .learn import trait_miner
 from .ads import ad_generator
@@ -25,9 +27,11 @@ SOURCES = [RedditSource, ProductHuntSource, RssSource, GoogleTrendsSource, WebSe
 
 def run_pipeline(settings, cache, llm, *, max_candidates: int | None = None,
                  inject_test: bool = False, learn: bool = False,
-                 on_progress=None) -> Report:
+                 allow_repeats: bool = False, on_progress=None) -> Report:
     """Tam kesif->puanlama->reklam hattini calistirir ve Report doner.
 
+    allow_repeats=False (varsayilan): daha once gosterilen urunler haric tutulur —
+    her tarama oncekinden FARKLI urunler verir.
     on_progress: opsiyonel callable(str) — ilerleme mesajlari (bot 'yaziyor...' icin)."""
     def progress(msg: str) -> None:
         print(msg)
@@ -65,12 +69,29 @@ def run_pipeline(settings, cache, llm, *, max_candidates: int | None = None,
 
     # 2) TEKILLESTIR
     candidates = dedup_mod.dedup(candidates)
-    max_n = max_candidates or settings.config["run"]["max_candidates"]
-    candidates = candidates[:max_n]
     progress(f"[dedup] {len(candidates)} kanonik aday")
 
+    # 2b) SATILABILIRLIK — liste/haber/editoryal basliklari ele, tek urunleri tut
+    candidates, non_products = sellable.filter_sellable(candidates)
+    progress(f"[satilabilir] {len(candidates)} urun ({len(non_products)} liste/haber elendi)")
+
+    # 2c) GECMIS — daha once gosterilenleri haric tut (her tarama FARKLI olsun)
+    history = HistoryStore(settings.data_dir / "history.json")
+    if not allow_repeats:
+        candidates, skipped = history.filter_unseen(candidates)
+        progress(f"[gecmis] {skipped} onceden gosterilen atlandi; {len(candidates)} yeni aday "
+                 f"(toplam {history.run_count} tarama gecmisi)")
+        if skipped:
+            report.notes.append(
+                f"{skipped} urun daha once gosterildigi icin atlandi — bu liste yeni urunlerden olusur.")
+
+    max_n = max_candidates or settings.config["run"]["max_candidates"]
+    candidates = candidates[:max_n]
+
     if not candidates:
-        report.notes.append("Hicbir kaynaktan aday gelmedi — ag erisimini kontrol edin.")
+        report.notes.append(
+            "Yeni aday kalmadi. Kaynaklar engelli olabilir ya da tum guncel urunler zaten "
+            "gosterildi — sonra tekrar deneyin veya --repeat-ok ile eskilere de bakin.")
         return report
 
     # 3) TURKIYE KAPISI
@@ -88,5 +109,10 @@ def run_pipeline(settings, cache, llm, *, max_candidates: int | None = None,
     top_n = settings.config["run"]["top_ads"]
     report.ads = ad_generator.generate(kept[:top_n], llm)
     progress(f"[reklam] {len(report.ads)} konsept uretildi")
+
+    # 8) GECMISE KAYDET — bu taramada gosterilenleri isaretle ki bir daha gelmesin
+    if not allow_repeats:
+        history.record(report.ranked)
+        progress(f"[gecmis] {len(report.ranked)} urun hafizaya eklendi")
 
     return report

@@ -4,6 +4,7 @@ Secilen subreddit'ler "insanlarin gorunce almak istedigi" urunleri toplayan
 topluluklar; upvote sayisi dogal bir on-viralite sinyalidir."""
 from __future__ import annotations
 
+import random
 import time
 
 from .. import http
@@ -18,9 +19,13 @@ class RedditSource(Source):
     def fetch(self) -> list[Candidate]:
         out: list[Candidate] = []
         listing = self.cfg.get("listing", "top")
-        timeframe = self.cfg.get("timeframe", "month")
+        # CESITLILIK: zaman araligini tarama basina dondur (bazen haftalik, bazen aylik)
+        timeframe = self.cfg.get("timeframe") or random.choice(["week", "month"])
         limit = int(self.cfg.get("limit_per_sub", 25))
-        for sub in self.cfg.get("subreddits", []):
+        # CESITLILIK: subreddit havuzunu karistir -> her tarama farkli topluluklardan baslar
+        subs = list(self.cfg.get("subreddits", []))
+        random.shuffle(subs)
+        for sub in subs:
             url = f"https://www.reddit.com/r/{sub}/{listing}.json"
             key = f"reddit:{sub}:{listing}:{timeframe}:{limit}"
             data = self.cache.get_or(key, lambda: self._fetch_json(url, timeframe, limit))

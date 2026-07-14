@@ -37,9 +37,24 @@ python run.py                # tam pipeline
 python run.py --no-llm       # LLM'siz, deterministik taslak rapor
 python run.py --learn        # önce rubric'i yeniden öğren
 python run.py --inject-test  # Türkiye kapısını bilinen yaygın ürünle test et
+python run.py --repeat-ok    # geçmiş filtresini kapat (eski ürünler de gelebilsin)
 ```
 
 Çıktı: `output/YYYY-MM-DD_report.md` (insan için, Türkçe) + `.json` (makine için).
+
+## Her tarama FARKLI ürün getirir
+
+Ajan tek bir ürün etrafında dönmez — **her tarama öncekilerden farklı, yeni ürünler** verir:
+
+- **Geçmiş hafızası** (`data/history.json`): daha önce gösterilen ürünler bir daha getirilmez.
+  (Yerel/kişisel durum dosyasıdır, git'e girmez.)
+- **Satılabilirlik filtresi**: "En iyi 8 mutfak aleti" gibi liste/haber başlıklarını eler,
+  yalnızca satılabilir **tek somut ürünleri** tutar.
+- **Çeşitlilik**: her tarama farklı arama sorgularını ve subreddit'leri karıştırır →
+  her sefer farklı nişler (mutfak, evcil hayvan, güzellik, araç, kamp, bebek…) yüzeye çıkar.
+
+Eskileri de tekrar görmek istersen: `python run.py --repeat-ok` (veya hafızayı sıfırlamak için
+`data/history.json` dosyasını sil).
 
 ## Telegram Botu (@UrunuTAkibiBot)
 

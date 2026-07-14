@@ -5,6 +5,7 @@ oturumunda calisirken operatorun WebSearch araciyla daha kaliteli sonuc alip
 output/ altina rapor uretmesi onerilir (README'de anlatilir)."""
 from __future__ import annotations
 
+import random
 from urllib.parse import unquote, urlparse, parse_qs
 
 from bs4 import BeautifulSoup
@@ -47,13 +48,29 @@ def ddg_search(cache, query: str, max_results: int = 8) -> list[dict] | None:
     return cache.get_or(f"ddg:{query}:{max_results}", _fetch)
 
 
+def _rotate_pick(items: list[str], k: int) -> list[str]:
+    """Havuzdan rastgele k oge sec (cesitlilik). k>=len ise hepsi karistirilir."""
+    if not items:
+        return []
+    if k >= len(items):
+        shuffled = list(items)
+        random.shuffle(shuffled)
+        return shuffled
+    return random.sample(items, k)
+
+
 class WebSearchSource(Source):
     name = "web_search"
     reliability = "medium"
 
     def fetch(self) -> list[Candidate]:
         out = []
-        for query in self.cfg.get("queries", []):
+        # CESITLILIK: her tarama sorgu havuzundan farkli bir alt kume secilir ki
+        # her sefer farkli nisler yuzeye ciksin. rotate_pick sabit tohum kullanmaz.
+        queries = list(self.cfg.get("queries", []))
+        pick = int(self.cfg.get("queries_per_run", 4))
+        selected = _rotate_pick(queries, pick)
+        for query in selected:
             for res in ddg_search(self.cache, query) or []:
                 out.append(Candidate(
                     title=res["title"],

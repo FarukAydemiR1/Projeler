@@ -10,14 +10,19 @@ run:
 sources:
   reddit:
     enabled: true
-    subreddits:
+    subreddits:              # havuz genis; her tarama karistirilip farkli topluluklardan baslar
       - shutupandtakemymoney
       - gadgets
       - INEEEEDIT
       - ofcoursethatsathing
       - DidntKnowIWantedThat
+      - BuyItForLife
+      - ProductPorn
+      - somethingimade
+      - CoolProducts
+      - gadgetgifts
     listing: top             # top | hot | new
-    timeframe: month
+    timeframe:               # bos birak -> her tarama week/month arasi dondurur (cesitlilik)
     limit_per_sub: 25
   producthunt:
     enabled: true            # PRODUCTHUNT_TOKEN yoksa otomatik devre disi
@@ -34,12 +39,26 @@ sources:
     limit_per_feed: 20
   web_search:
     enabled: true            # DuckDuckGo HTML uzerinden; engellenirse sessizce bos doner
-    queries:
+    queries_per_run: 5       # her tarama havuzdan bu kadar sorgu secer (cesitlilik)
+    queries:                 # genis havuz -> her tarama farkli nisleri yuzeye cikarir
       - "viral tiktok gadget 2026"
       - "trending amazon finds this month"
       - "new problem solving gadget everyone is buying"
       - "viral home gadget aliexpress trending"
       - "stress relief gadget trending"
+      - "new kitchen gadget going viral"
+      - "clever pet product trending 2026"
+      - "viral beauty tool tiktok made me buy it"
+      - "car accessory gadget viral"
+      - "desk setup gadget viral 2026"
+      - "camping outdoor gadget trending"
+      - "baby parenting gadget viral"
+      - "fitness recovery gadget trending"
+      - "korea japan viral product not in europe"
+      - "sleep gadget viral tiktok"
+      - "cleaning gadget oddly satisfying viral"
+      - "travel gadget must have 2026"
+      - "self care wellness device trending"
 
 turkey_availability:
   enabled: true

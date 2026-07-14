@@ -33,6 +33,8 @@ def main() -> int:
                     help="TR kapisi testi icin bilinen yaygin urun enjekte et")
     ap.add_argument("--telegram", action="store_true",
                     help="rapor kurulunca Telegram'a (TELEGRAM_CHAT_ID) gonder")
+    ap.add_argument("--repeat-ok", action="store_true",
+                    help="daha once gosterilen urunler de gelebilsin (gecmis filtresini kapat)")
     args = ap.parse_args()
 
     settings = Settings()
@@ -43,6 +45,7 @@ def main() -> int:
     report = run_pipeline(
         settings, cache, llm,
         max_candidates=args.max, inject_test=args.inject_test, learn=args.learn,
+        allow_repeats=args.repeat_ok,
     )
 
     # RAPOR (JSON + Markdown)
