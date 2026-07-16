@@ -114,7 +114,18 @@ Tek komutla izleme listesini tarar, raporu oluşturur ve Telegram'a gönderir
 1. Telegram'da **@BotFather**'a `/newbot` yaz, bot token'ını al.
 2. Botunla bir konuşma başlat (herhangi bir mesaj gönder), sonra chat id'ni öğren:
    `https://api.telegram.org/bot<TOKEN>/getUpdates` → `chat.id`
-3. Ortam değişkenlerini ver (token'ı asla config dosyasına yazma):
+3. Token'ı güvenli şekilde ver. **İki yol var, ikisi de token'ı repoya koymaz:**
+
+**a) `.env` dosyası (yerel makinede önerilen):** `.env` dosyası `.gitignore`'da
+olduğu için repoya asla gönderilmez. Şablonu kopyalayıp doldur:
+
+```bash
+cp .env.example .env
+# .env dosyasını aç, TELEGRAM_BOT_TOKEN ve TELEGRAM_CHAT_ID değerlerini yaz
+python -m stock_signal_agent.cli daily --market bist   # .env otomatik okunur
+```
+
+**b) Ortam değişkeni (tek seferlik / CI):**
 
 ```bash
 export TELEGRAM_BOT_TOKEN="123456:ABC-..."
@@ -122,11 +133,17 @@ export TELEGRAM_CHAT_ID="987654321"
 python -m stock_signal_agent.cli daily --market bist
 ```
 
+> ⚠️ Token bir **şifredir**. Onu `config.yaml`'a veya herhangi bir izlenen
+> dosyaya YAZMA — repoya sızarsa geri alınamaz. Sızdıysa @BotFather'da
+> `/revoke` ile yenisini al.
+
 **Otomatik günlük çalıştırma:** Repo, her iş günü 18:17 TSİ'de taramayı çalıştırıp
 Telegram'a gönderen bir GitHub Actions workflow'u içerir
 (`.github/workflows/daily_scan.yml`). Aktifleştirmek için repo ayarlarından iki
-secret eklemen yeterli: **Settings → Secrets and variables → Actions** →
-`TELEGRAM_BOT_TOKEN` ve `TELEGRAM_CHAT_ID`. İstersen **Actions** sekmesinden
+secret eklemen yeterli: **Settings → Secrets and variables → Actions → New
+repository secret** → `TELEGRAM_BOT_TOKEN` ve `TELEGRAM_CHAT_ID`. GitHub secret'ları
+şifreli saklanır ve log'larda maskelenir — token'ı GitHub Actions için doğru
+saklama yeri burasıdır (`.env` dosyası değil, çünkü `.env` sadece yerel makinende). İstersen **Actions** sekmesinden
 "Daily Stock Signal Scan" workflow'unu elle de tetikleyebilirsin
 (workflow_dispatch). Kendi makinende cron da kullanabilirsin:
 

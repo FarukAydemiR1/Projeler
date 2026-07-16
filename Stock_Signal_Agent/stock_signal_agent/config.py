@@ -5,8 +5,9 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 import yaml
 
@@ -36,8 +37,49 @@ DEFAULTS = {
 }
 
 
+def load_dotenv(path: Optional[str | Path] = None) -> Optional[str]:
+    """`.env` dosyasını okuyup os.environ'a yükler (best-effort, bağımlılıksız).
+
+    GÜVENLİK: Telegram token'ı gibi gizli bilgiler .env dosyasına yazılır ve
+    bu dosya .gitignore'da olduğu için repoya ASLA gönderilmez. Zaten tanımlı
+    olan ortam değişkenlerinin üzerine yazmaz (gerçek ortam önceliklidir).
+
+    Yüklenen dosyanın yolunu döner (bir şey yüklendiyse), aksi halde None.
+    """
+    candidates = []
+    if path:
+        candidates.append(Path(path))
+    candidates.append(Path.cwd() / ".env")
+    candidates.append(Path(__file__).resolve().parent.parent / ".env")
+
+    for cand in candidates:
+        if not cand or not cand.exists():
+            continue
+        try:
+            for raw in cand.read_text(encoding="utf-8").splitlines():
+                line = raw.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, val = line.partition("=")
+                key = key.strip()
+                # opsiyonel `export KEY=...` biçimini de kabul et
+                if key.startswith("export "):
+                    key = key[len("export "):].strip()
+                val = val.strip().strip('"').strip("'")
+                if key and key not in os.environ:
+                    os.environ[key] = val
+            return str(cand)
+        except Exception:
+            return None  # .env okunamadıysa sessizce geç
+    return None
+
+
 def load_config(path: str | None = None) -> dict:
-    """config.yaml'ı yükler (varsa), varsayılanlarla birleştirir."""
+    """config.yaml'ı yükler (varsa), varsayılanlarla birleştirir.
+
+    Ayrıca varsa `.env` dosyasını ortam değişkenlerine yükler (gizli bilgiler
+    için — bkz. load_dotenv)."""
+    load_dotenv()
     cfg = {
         "bist": list(DEFAULT_BIST),
         "us": list(DEFAULT_US),
