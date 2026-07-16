@@ -1,0 +1,8 @@
+.env
+.cache/
+data/history.json
+output/*
+!output/DEMO_report_TR.md
+__pycache__/
+*.pyc
+.venv/

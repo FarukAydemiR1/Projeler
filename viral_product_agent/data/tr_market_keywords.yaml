@@ -1,0 +1,11 @@
+# TR/EN kategori esanlamlilari — turkey_availability aramalarini guclendirmek icin
+# (Faz 2: urun adi TR karsiligiyla da aranacak; MVP'de referans sozluk olarak durur)
+categories:
+  gadget: [gadget, alet, cihaz, akilli cihaz]
+  fidget: [fidget, stres carki, stres oyuncagi, pop it]
+  lamp: [lamba, gece lambasi, ambiyans isigi]
+  massager: [masaj aleti, masaj tabancasi, boyun masaj]
+  organizer: [duzenleyici, organizer, saklama kabi]
+  kitchen: [mutfak gereci, mutfak aleti, pratik mutfak]
+  printer: [yazici, termal yazici, cep yazicisi]
+  bottle: [matara, su sisesi, termos]
