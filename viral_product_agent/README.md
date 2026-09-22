@@ -126,8 +126,9 @@ Tek seferlik denemek için `python run.py --provider openrouter`.
 
 **Düşünme (reasoning) modu:** Nemotron bir *reasoning* modelidir. Varsayılan olarak kapalıdır
 (hızlı ve ucuz; JSON puanlama için yeterli). `config.yaml` → `llm.thinking: true` yaparsanız
-kalite biraz artar ama süre ve token tüketimi birkaç kat büyür — 60 aday taranırken bunu
-hesaba katın.
+gerekçeler biraz daha isabetli olur. Ölçüm (tek ürün puanlama çağrısı, NVIDIA ucu):
+kapalı **~10 sn**, açık **~11 sn** — bu prompt boyutunda fark küçük, ama üretilen token
+sayısı arttığı için 60 adaylık taramada süre farkı büyüyebilir.
 
 > ⚠️ **Yerel çalıştırma:** Nemotron 3 Ultra 550B parametrelidir; kendi bilgisayarınızda
 > çalışmaz (NVFP4 ağırlıklar için ~4× B200 gerekir). `local` seçeneği, kiralık/kurumsal

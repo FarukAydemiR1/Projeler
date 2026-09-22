@@ -14,7 +14,7 @@ llm:
   provider: auto
   thinking: false           # Nemotron "reasoning" modu: kalite artar, sure/token 5-10x
   # Asagidakiler bos birakilirsa saglayiciya gore makul varsayilan secilir:
-  model:                    # or. nvidia/nemotron-3-ultra  (bos = saglayici varsayilani)
+  model:                    # or. nvidia/nemotron-3-ultra-550b-a55b (bos = saglayici varsayilani)
   base_url:                 # ozel/self-host uc icin (or. http://localhost:8000/v1)
   max_tokens:               # bos: dusunme kapaliyken 2000, acikken 16000
   temperature:              # bos: dusunme kapaliyken 0.6, acikken 1.0

@@ -32,7 +32,7 @@ class Preset:
 PRESETS: dict[str, Preset] = {
     "nvidia": Preset(
         kind="openai",
-        model="nvidia/nemotron-3-ultra",
+        model="nvidia/nemotron-3-ultra-550b-a55b",  # GET /v1/models ile dogrulandi
         base_url="https://integrate.api.nvidia.com/v1",
         key_env="NVIDIA_API_KEY",
         note="NVIDIA Nemotron 3 Ultra — build.nvidia.com anahtari (nvapi-...)",
@@ -53,7 +53,8 @@ PRESETS: dict[str, Preset] = {
     ),
     "local": Preset(
         kind="openai",
-        model="nvidia/nemotron-3-ultra",
+        # self-host'ta servis edilen ad genelde HF deposu olur; LLM_MODEL ile ezilebilir
+        model="nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4",
         base_url="http://localhost:8000/v1",
         key_env="LLM_API_KEY",
         note="Yerel/self-host OpenAI-uyumlu uc (vLLM / SGLang / TRT-LLM)",
