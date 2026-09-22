@@ -48,7 +48,8 @@ Neden secildi: {rationale}
 Uret (Turkce):
 1) hook: ilk 2 saniyede kaydirmayi durduran tek cumlelik kanca
 2) video_script: 15 saniyelik dikey video senaryosu — sahne sahne (0-2sn, 2-7sn, 7-12sn, 12-15sn),
-   her sahnede gorsel + ekran yazisi
+   her sahnede gorsel + ekran yazisi. TEK BIR METIN olarak yaz, sahneleri " | " ile ayir;
+   liste veya ic ice nesne DONME.
 3) platform: TikTok / Instagram Reels / Meta — hangisi ve neden (tek cumle)
 4) audience: TR hedef kitle tanimi (yas, ilgi alanlari, davranis)
 

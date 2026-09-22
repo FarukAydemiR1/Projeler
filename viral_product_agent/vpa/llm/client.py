@@ -89,6 +89,48 @@ class LLMClient:
             f.write(f"\n\n## {label}\n\n```\n{prompt}\n```\n")
 
 
+def as_text(value) -> str:
+    """Metin beklenen alan liste/sozluk gelebilir (modelden modele degisir) — duzlestirir.
+
+    Ham repr ("[{'time': '0-2sn', ...}]") rapora/Telegram'a dusmesin diye.
+    """
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, bool):
+        return "evet" if value else "hayir"
+    if isinstance(value, dict):
+        return ", ".join(f"{k}: {as_text(v)}" for k, v in value.items() if as_text(v))
+    if isinstance(value, (list, tuple)):
+        return " | ".join(part for part in (as_text(v) for v in value) if part)
+    return str(value)
+
+
+def as_mapping(value) -> dict[str, str]:
+    """Sozluk beklenen alan string/liste gelirse bos doner — cagiran .get() ile cakilmasin."""
+    if not isinstance(value, dict):
+        return {}
+    return {str(k): as_text(v) for k, v in value.items()}
+
+
+_NUMBER = re.compile(r"-?\d+(?:[.,]\d+)?")
+
+
+def as_score(value) -> float | None:
+    """0-10 beklenen alan 8, "8", "8/10" veya "8 puan" gelebilir; cozulemezse None."""
+    if isinstance(value, bool) or value is None:
+        return None
+    if isinstance(value, (int, float)):
+        number = float(value)
+    else:
+        match = _NUMBER.search(str(value))
+        if not match:
+            return None
+        number = float(match.group().replace(",", "."))
+    return min(max(number, 0.0), 10.0)
+
+
 def extract_json(text: str) -> dict | list | None:
     """Serbest metin icindeki ilk gecerli JSON nesnesini/dizisini cikarir.
 
