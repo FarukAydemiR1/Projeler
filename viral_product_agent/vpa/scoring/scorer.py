@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 
 from ..llm import prompts
+from ..llm.client import as_mapping, as_score
 from ..models import Candidate
 
 LLM_DIMS = ["problem_or_emotion", "demonstrability", "cultural_fit_tr",
@@ -31,10 +32,21 @@ def _llm_score(c: Candidate, llm) -> None:
         ),
         label=f"score:{c.title[:60]}",
     )
-    if isinstance(result, dict):
-        scores = result.get("scores", {})
-        c.llm_scores = {k: float(scores.get(k, 0)) for k in LLM_DIMS if k in scores}
-        c.llm_rationale = result.get("rationale", {})
+    if not isinstance(result, dict):
+        return
+    # Yanit sekli modele gore degisir: puanlar bazen "scores" altinda, bazen dogrudan
+    # kokte doner; degerler "8" veya "8/10" olabilir. Cozulemeyen boyut atlanir,
+    # _blend aktif agirliga normalize ettigi icin skor yine 0..1 araliginda kalir.
+    scores = result.get("scores")
+    if not isinstance(scores, dict):
+        scores = result
+    parsed = {}
+    for dim in LLM_DIMS:
+        value = as_score(scores.get(dim))
+        if value is not None:
+            parsed[dim] = value
+    c.llm_scores = parsed
+    c.llm_rationale = as_mapping(result.get("rationale"))
 
 
 def _blend(c: Candidate, weights: dict[str, float], llm_used: bool) -> float:

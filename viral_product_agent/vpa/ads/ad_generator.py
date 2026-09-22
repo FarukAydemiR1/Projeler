@@ -1,10 +1,11 @@
 """Gereksinim #6: en iyi urunler icin reklam konsepti (kanca + 15sn senaryo + platform + kitle).
 
-LLM aciksa Claude uretir; kapaliysa urun bilgisinden doldurulmus sablon-iskelet
+LLM aciksa secili model uretir; kapaliysa urun bilgisinden doldurulmus sablon-iskelet
 uretilir ve prompt pending dosyasina yazilir (anahtar gelince kaliteli versiyon alinir)."""
 from __future__ import annotations
 
 from ..llm import prompts
+from ..llm.client import as_text
 from ..models import AdConcept, Candidate
 
 
@@ -18,13 +19,15 @@ def generate(top: list[Candidate], llm) -> list[AdConcept]:
             ),
             label=f"ad:{c.title[:60]}",
         )
-        if isinstance(result, dict) and result.get("hook"):
+        # video_script bazi modellerde sahne listesi olarak doner; as_text duzlestirir
+        # ki rapora ham Python repr'i dusmesin.
+        if isinstance(result, dict) and as_text(result.get("hook")):
             ads.append(AdConcept(
                 product_title=c.title,
-                hook=result.get("hook", ""),
-                video_script=result.get("video_script", ""),
-                platform=result.get("platform", ""),
-                audience=result.get("audience", ""),
+                hook=as_text(result.get("hook")),
+                video_script=as_text(result.get("video_script")),
+                platform=as_text(result.get("platform")),
+                audience=as_text(result.get("audience")),
             ))
         else:
             ads.append(_template_fallback(c))

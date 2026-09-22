@@ -143,7 +143,7 @@ class Bot:
 
     def _cmd_scan(self, chat_id: int) -> None:
         self.tg.send_message(chat_id, "🔎 Tarıyorum, birkaç dakika sürebilir…")
-        llm = LLMClient(self.settings.anthropic_api_key, self.cache, self.settings.output_dir)
+        llm = LLMClient.from_settings(self.settings, self.cache)
         report = run_pipeline(self.settings, self.cache, llm)
         self.last_report = report
         render.write(report, self.settings.output_dir, report.generated_at)

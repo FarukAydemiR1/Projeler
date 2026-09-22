@@ -1,4 +1,4 @@
-anthropic>=0.40
+anthropic>=0.40      # sadece LLM_PROVIDER=anthropic icin; Nemotron/OpenRouter requests ile calisir
 requests>=2.31
 python-dotenv>=1.0
 PyYAML>=6.0

@@ -7,6 +7,19 @@ run:
   top_ads: 5                # reklam konsepti uretilecek urun sayisi
   report_language: tr
 
+llm:
+  # Hangi model puanlayacak? auto = .env'de anahtari olan ilk saglayici
+  # (nvidia -> openrouter -> anthropic). Secenekler: auto | nvidia | openrouter |
+  # anthropic | local. Tek seferlik degisiklik: python run.py --provider nvidia
+  provider: auto
+  thinking: false           # Nemotron "reasoning" modu: kalite artar, sure/token 5-10x
+  # Asagidakiler bos birakilirsa saglayiciya gore makul varsayilan secilir:
+  model:                    # or. nvidia/nemotron-3-ultra-550b-a55b (bos = saglayici varsayilani)
+  base_url:                 # ozel/self-host uc icin (or. http://localhost:8000/v1)
+  max_tokens:               # bos: dusunme kapaliyken 2000, acikken 16000
+  temperature:              # bos: dusunme kapaliyken 0.6, acikken 1.0
+  timeout_seconds: 180      # buyuk modeller yavas yanit verebilir
+
 sources:
   reddit:
     enabled: true

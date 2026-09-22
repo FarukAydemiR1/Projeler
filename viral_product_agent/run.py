@@ -2,7 +2,9 @@
 """Viral Urun Kesif Ajani — CLI giris noktasi.
 
 Kullanim:
-    python run.py                 # tam pipeline (ANTHROPIC_API_KEY varsa LLM'li)
+    python run.py                 # tam pipeline (.env'de LLM anahtari varsa LLM'li)
+    python run.py --provider nvidia   # NVIDIA Nemotron 3 Ultra ile puanla
+    python run.py --llm-check     # sadece LLM baglantisini test et, cikis
     python run.py --no-llm        # LLM adimlarini zorla atla (deterministik rapor)
     python run.py --learn         # once rubric'i yeniden ogren (trait mining)
     python run.py --max 30        # aday sayisini sinirla
@@ -20,6 +22,7 @@ from datetime import date
 from vpa.settings import Settings
 from vpa.cache import DiskCache
 from vpa.llm.client import LLMClient
+from vpa.llm.providers import PROVIDER_NAMES
 from vpa.pipeline import run_pipeline
 from vpa.report import render
 
@@ -27,6 +30,10 @@ from vpa.report import render
 def main() -> int:
     ap = argparse.ArgumentParser(description="Turkiye icin viral urun kesif ajani")
     ap.add_argument("--no-llm", action="store_true", help="LLM adimlarini atla")
+    ap.add_argument("--provider", choices=PROVIDER_NAMES, default="",
+                    help="LLM saglayicisi (varsayilan: config.yaml/.env)")
+    ap.add_argument("--llm-check", action="store_true",
+                    help="LLM baglantisini tek kucuk cagri ile test et ve cik")
     ap.add_argument("--learn", action="store_true", help="rubric'i yeniden ogren")
     ap.add_argument("--max", type=int, default=None, help="max aday sayisi")
     ap.add_argument("--inject-test", action="store_true",
@@ -39,8 +46,12 @@ def main() -> int:
 
     settings = Settings()
     cache = DiskCache(settings.cache_dir, settings.config["cache"]["ttl_hours"])
-    api_key = "" if args.no_llm else settings.anthropic_api_key
-    llm = LLMClient(api_key, cache, settings.output_dir)
+    llm = LLMClient.from_settings(settings, cache, disabled=args.no_llm,
+                                  provider=args.provider)
+    print(f"[llm] {llm.label}")
+
+    if args.llm_check:
+        return _llm_check(llm)
 
     report = run_pipeline(
         settings, cache, llm,
@@ -57,6 +68,25 @@ def main() -> int:
         _push_telegram(settings, report)
 
     return 0 if report.ranked else 1
+
+
+def _llm_check(llm) -> int:
+    """Anahtar/uc dogru mu? Tek kucuk JSON cagrisi yapar, ucuzdur."""
+    if not llm.enabled:
+        print("[llm-check] LLM kapali: .env'e anahtar ekleyin "
+              "(NVIDIA_API_KEY / OPENROUTER_API_KEY / ANTHROPIC_API_KEY).")
+        return 1
+    print(f"[llm-check] {llm.cfg.provider} -> {llm.cfg.base_url or 'anthropic SDK'}")
+    result = llm.json_call(
+        'Sadece su JSON\'u don, baska hicbir sey yazma: '
+        '{"ok": true, "model": "<kullandigin modelin adi>"}',
+        label="llm-check",
+    )
+    if result is None:
+        print("[llm-check] BASARISIZ — yukaridaki hata mesajina bakin.")
+        return 1
+    print(f"[llm-check] BASARILI — yanit: {result}")
+    return 0
 
 
 def _push_telegram(settings, report) -> None:

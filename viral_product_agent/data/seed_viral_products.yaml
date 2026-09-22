@@ -8,7 +8,7 @@ viral_products:
     size: kucuk
   - name: Mini termal yazici (cep yazicisi)
     why_bought: not/etiket/fotograf cikti yeniligi, ders calisma estetigi (studygram)
-    ad_pattern: "bak ne cikardim" gosterimi, ogrenci masasi kurulumu
+    ad_pattern: '"bak ne cikardim" gosterimi, ogrenci masasi kurulumu'
     price_band_usd: 20-40
     size: kucuk
   - name: Gunes dogumu simulasyon lambasi (sunset lamp)
