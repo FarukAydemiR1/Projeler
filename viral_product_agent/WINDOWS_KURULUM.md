@@ -50,13 +50,32 @@ sırayla yap; komut ezberlemene gerek yok, iki dosyaya çift tıklayacaksın.
 5. `baslat.bat` penceresini kapat, tekrar çift tıkla (yeni ayarı okusun).
 6. Artık **`/tara`** yazınca ürünleri, **`/liste`** ile buton menüsünü alırsın. 🎉
 
+## Adım 7 (opsiyonel) — Ürünleri yapay zekâ puanlasın (ücretsiz)
+
+Bu adım olmadan da çalışır (taslak sıralama). Eklersen ürünler **NVIDIA Nemotron 3 Ultra**
+ile gerekçeli puanlanır ve reklam konseptleri gerçek kalitede üretilir:
+
+1. [build.nvidia.com](https://build.nvidia.com/nvidia/nemotron-3-ultra-550b-a55b) → giriş yap →
+   **Get API Key** → `nvapi-...` ile başlayan anahtarı kopyala.
+2. `.env` dosyasını Not Defteri ile aç, şu satırın sonuna yapıştır:
+   ```
+   NVIDIA_API_KEY=nvapi-buraya_yapistir
+   ```
+3. Kaydet, `baslat.bat` penceresini kapatıp tekrar çift tıkla.
+   > Test etmek istersen: klasörde `kur.bat`'ın açtığı pencereden
+   > `python run.py --llm-check` yazıp Enter'a bas — `BASARILI` görmelisin.
+
+> ⚠️ Anahtar bir şifredir: kimseyle paylaşma, sohbete yapıştırma. `.env` dosyası
+> git'e **girmez**. Sızarsa build.nvidia.com'dan iptal edip yenisini al.
+
 ---
 
 ### Sık takılınan yerler
 - **"python bulunamadi / not recognized"** → Python "Add to PATH" işaretsiz kurulmuş. Python'u kaldırıp Adım 1'i tekrar yap.
 - **Bot cevap vermiyor** → `baslat.bat` penceresi açık mı? Kapalıysa bot susar. Açık tut.
 - **Token hatası (Unauthorized)** → `.env`'deki token yanlış/eski. BotFather → `/mybots` → botun → **API Token**'ı tekrar kopyala.
-- **Ürün az geliyor** → Normal; en iyi sonuç için ev/ofis internetinde çalıştır. İstersen sonra `ANTHROPIC_API_KEY` ekleyince kalite artar.
+- **Ürün az geliyor** → Normal; en iyi sonuç için ev/ofis internetinde çalıştır. Kalite için Adım 7'deki ücretsiz `NVIDIA_API_KEY`'i ekle.
+- **`[llm] ... yanit vermedi` / `reddetti`** → Anahtar yanlış veya kota dolmuş. Tarama yine de tamamlanır (taslak mod). `python run.py --llm-check` ile anahtarı test et.
 
 > Bilgisayarını kapatınca bot durur. 7/24 açık kalmasını istersen bana söyle —
 > ücretsiz bir bulut sunucuda (PythonAnywhere/Railway) çalıştırmayı birlikte kurarız.

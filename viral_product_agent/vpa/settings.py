@@ -6,6 +6,8 @@ from pathlib import Path
 
 import yaml
 
+from .llm import providers
+
 try:
     from dotenv import load_dotenv
 except ImportError:  # dotenv opsiyonel; yoksa sadece ortam degiskenleri okunur
@@ -25,17 +27,30 @@ class Settings:
         self.anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
         self.producthunt_token = os.environ.get("PRODUCTHUNT_TOKEN", "").strip()
 
+        # LLM saglayicisi: config.yaml llm bolumu + .env (bkz. vpa/llm/providers.py).
+        # Cozulemezse (anahtar yok) llm_config None kalir -> deterministik mod.
+        try:
+            self.llm_config = self.resolve_llm()
+        except ValueError as exc:
+            print(f"[ayar] {exc} — LLM devre disi.")
+            self.llm_config = None
+
         # Telegram (bot.py + run.py --telegram). Token .env'de tutulur, ASLA commit edilmez.
         self.telegram_bot_token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
         self.telegram_chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
         self.telegram_allowed_users = _parse_id_csv(os.environ.get("TELEGRAM_ALLOWED_USERS", ""))
 
-        self.llm_enabled = bool(self.anthropic_api_key)
+        self.llm_enabled = self.llm_config is not None
         self.output_dir = ROOT / "output"
         self.cache_dir = ROOT / ".cache"
         self.data_dir = ROOT / "data"
         self.output_dir.mkdir(exist_ok=True)
         self.cache_dir.mkdir(exist_ok=True)
+
+    def resolve_llm(self, provider_override: str = "") -> providers.LLMConfig | None:
+        """Saglayiciyi coz. provider_override: --provider bayragi (bos ise otomatik)."""
+        return providers.resolve(self.config.get("llm", {}) or {},
+                                 provider_override=provider_override)
 
     def source_cfg(self, name: str) -> dict:
         return self.config.get("sources", {}).get(name, {})
