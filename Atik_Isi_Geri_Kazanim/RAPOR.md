@@ -3,7 +3,7 @@
 **Rapor türü:** Akademik araştırma ve tasarım raporu
 **Tarih:** Kasım 2026
 **Kaynak sayısı:** 52, IEEE numaralı atıf sistemiyle verilmiştir. Hakemli dergi makalelerinin DOI kayıtları Crossref üzerinden doğrulanmıştır.
-**Ekler:** `hesap/hesaplar.py` (tekrar üretilebilir hesap betiği), `hesap/sonuclar.json` (sayısal çıktılar), `sekiller/` (11 şekil)
+**Ekler:** `hesap/hesaplar.py` (tekrar üretilebilir hesap betiği), `hesap/sonuclar.json` (sayısal çıktılar), `sekiller/` (12 şekil)
 
 ---
 
@@ -94,6 +94,14 @@ CO₂ emisyon ve yakıt ekonomisi düzenlemeleri, motor içi iyileştirmelerin s
 ### 2.3 Bu çalışmada yapılan hesapların yöntemi
 
 **[H]** Hesaplar `hesap/hesaplar.py` dosyasında tekrar üretilebilir biçimde yer alır. Akışkan özellikleri CoolProp 8.0 kütüphanesinden alınmıştır. Su için IAPWS-95, organik akışkanlar için Helmholtz enerjisi tabanlı hal denklemleri kullanılır. Ölü hal T₀ = 25 °C ve P₀ = 1.013 bar alınmıştır. Varsayımlar Tablo 6'da toplu olarak verilmiştir.
+
+### 2.4 Çalışmanın akışı
+
+Çalışma altı adımda yürütülmüştür (Şekil 3). İlk üç adım literatürden veri toplamaya, son üç adım bu verilerin bağımsız olarak doğrulanmasına, çevrim analizine ve mühendislik değerlendirmesine ayrılmıştır.
+
+![Şekil 3](sekiller/sekil03_yontem_akisi.png)
+
+**Şekil 3.** Bu çalışmada izlenen yöntemin akış şeması. Mavi kutular literatürden veri toplama adımlarını, yeşil kutular bu çalışmada yapılan bağımsız hesapları **[H]** gösterir.
 
 ---
 
@@ -261,11 +269,11 @@ TEG ve turbo-kompaund karşılaştırma ve tamamlayıcı seçenek olarak değerl
 - İkinci bir radyatör gerekir ve bu radyatörün ana radyatörün arkasına yerleştirilmesi daha avantajlıdır.
 - Su ile verim kazancı, çevre koşullarına bağlı olarak %100 yükte %6–10 aralığındadır.
 
-Şekil 3 bu yerleşimin bu çalışmada yeniden çizilmiş şematik gösterimidir.
+Şekil 4 bu yerleşimin bu çalışmada yeniden çizilmiş şematik gösterimidir.
 
-![Şekil 3](sekiller/sekil03_sistem_semasi.png)
+![Şekil 4](sekiller/sekil04_sistem_semasi.png)
 
-**Şekil 3.** Su-buharlı alt Rankine çevriminin yerleşimi. **[L→Ç]** Mavridou vd. (2010) [5], orijinal Şekil 1 ve Bölüm 2'deki anlatıma dayanarak yeniden çizilmiş şematik gösterim. Sayısal değerler aynı makalenin Tablo 2'sindendir.
+**Şekil 4.** Su-buharlı alt Rankine çevriminin yerleşimi. **[L→Ç]** Mavridou vd. (2010) [5], orijinal Şekil 1 ve Bölüm 2'deki anlatıma dayanarak yeniden çizilmiş şematik gösterim. Sayısal değerler aynı makalenin Tablo 2'sindendir.
 
 **Tasarım noktası [L]:** En yüksek ısı yükü %100 yük ve 1300 rpm'de oluştuğu için ısı değiştirici bu noktaya göre boyutlandırılmıştır. Isı değiştirici üç işlevsel bölgeye ayrılmıştır: ön ısıtıcı, buharlaştırıcı ve kızdırıcı.
 
@@ -396,15 +404,15 @@ Tablo 4'teki verilerle LMTD, gereken UA değeri ve egzozun örtük özgül ısı
 - Ön ısıtıcıda h·A değeri gereken UA'dan yaklaşık %10 büyüktür (0.292 ile 0.264). Bu, 4 geçişli ön ısıtıcıda F≈0.90 alındığı izlenimini verir. Çok geçişli çapraz akışta beklenen bir değerdir.
 - Egzozun örtük c_p değeri sıcaklıkla artar (1.128 → 1.176 kJ/kg·K). Bu eğilim yanma ürünlerinin bilinen davranışıyla tutarlıdır.
 
-Şekil 4 aynı veriyi T–Q diyagramı olarak gösterir. Buharlaştırıcı girişinde egzoz ile su arasındaki en küçük sıcaklık farkı (pinch) 318.02 − 239.2 = 78.8 K'dir. Bu kadar büyük bir pinch, egzozun 261 °C'de atıldığı, yani geri kazanılabilir ısının önemli bir kısmının kullanılmadığı anlamına gelir. Su için sabit sıcaklıkta buharlaşma, kaynağa uyumu (temperature glide) sınırlar.
+Şekil 5 aynı veriyi T–Q diyagramı olarak gösterir. Buharlaştırıcı girişinde egzoz ile su arasındaki en küçük sıcaklık farkı (pinch) 318.02 − 239.2 = 78.8 K'dir. Bu kadar büyük bir pinch, egzozun 261 °C'de atıldığı, yani geri kazanılabilir ısının önemli bir kısmının kullanılmadığı anlamına gelir. Su için sabit sıcaklıkta buharlaşma, kaynağa uyumu (temperature glide) sınırlar.
 
-![Şekil 4](sekiller/sekil04_TQ_mavridou.png)
+![Şekil 5](sekiller/sekil05_TQ_mavridou.png)
 
-**Şekil 4.** Egzoz ısı değiştiricisinin T–Q diyagramı. **[L→Ç]** Veri: Mavridou vd. (2010) [5], Tablo 2. Pinch değeri bu çalışmada türetilmiştir.
+**Şekil 5.** Egzoz ısı değiştiricisinin T–Q diyagramı. **[L→Ç]** Veri: Mavridou vd. (2010) [5], Tablo 2. Pinch değeri bu çalışmada türetilmiştir.
 
 ### 5.2 Isı değiştirici tasarımlarının karşılaştırılması [L]
 
-Mavridou vd. [5] aynı ısı yükü (136.44 kW) için yedi tasarım varyantını karşılaştırmıştır. Tablo 8 ve Şekil 5 sonuçları özetler. Makaledeki orijinal Şekil 8–11 bu verilere dayanır.
+Mavridou vd. [5] aynı ısı yükü (136.44 kW) için yedi tasarım varyantını karşılaştırmıştır. Tablo 8 ve Şekil 6 sonuçları özetler. Makaledeki orijinal Şekil 8–11 bu verilere dayanır.
 
 **Tablo 8.** Isı değiştirici tasarımlarının karşılaştırılması. **[L]** Mavridou vd. (2010) [5], Tablo 6a ve 6b. Referans (m₀, Δp₀, W₀) düz borulu gövde-boru ısı değiştiricisidir.
 
@@ -420,9 +428,9 @@ Mavridou vd. [5] aynı ısı yükü (136.44 kW) için yedi tasarım varyantını
 
 Alan toplamları bu çalışmada Tablo 6a ve 6b'deki bölge değerlerinin toplanmasıyla bulunmuştur **[H]**. 40 ppi köpük için toplam 165.08 m² değeri makalenin metniyle birebir aynıdır.
 
-![Şekil 5](sekiller/sekil05_mavridou_tablo6.png)
+![Şekil 6](sekiller/sekil06_mavridou_tablo6.png)
 
-**Şekil 5.** Aynı ısı yükü için yedi egzoz ısı değiştiricisi tasarımının hacmi, göreli kütlesi ve göreli basınç kaybı. **[L→Ç]** Veri: Mavridou vd. (2010) [5], Tablo 6a ve 6b. Grafik bu çalışmada çizilmiştir.
+**Şekil 6.** Aynı ısı yükü için yedi egzoz ısı değiştiricisi tasarımının hacmi, göreli kütlesi ve göreli basınç kaybı. **[L→Ç]** Veri: Mavridou vd. (2010) [5], Tablo 6a ve 6b. Grafik bu çalışmada çizilmiştir.
 
 Makalede aktarılan sonuçlar **[L]** [5]:
 
@@ -464,21 +472,21 @@ Aynı egzoz kaynağı (503.5 °C, 0.49 kg/s; egzozun 25 °C'ye göre termal ekse
 
 **Ekserji dengesi kontrolü (R245fa).** Egzozun toplam ekserjisi 108.94 kW'tır. Çıktıların toplamı: 22.73 (net güç) + 52.09 (HEX) + 9.24 (genleştirici) + 1.09 (pompa) + 16.73 (yoğuşturucu) + 7.07 (baca) = 108.95 kW. Denge kapanmaktadır.
 
-![Şekil 6](sekiller/sekil06_Ts_kendi_hesap.png)
+![Şekil 7](sekiller/sekil07_Ts_kendi_hesap.png)
 
-**Şekil 6.** Dört akışkan için T–s diyagramları. **[H]** Bu çalışmada CoolProp ile hesaplanmıştır. 3→4 genleşmesi düz çizgiyle gösterilmiştir.
+**Şekil 7.** Dört akışkan için T–s diyagramları. **[H]** Bu çalışmada CoolProp ile hesaplanmıştır. 3→4 genleşmesi düz çizgiyle gösterilmiştir.
 
-![Şekil 7](sekiller/sekil07_Ph_R245fa.png)
+![Şekil 8](sekiller/sekil08_Ph_R245fa.png)
 
-**Şekil 7.** R245fa ORC'nin P–h diyagramı. **[H]**
+**Şekil 8.** R245fa ORC'nin P–h diyagramı. **[H]**
 
-![Şekil 8](sekiller/sekil08_duyarlilik.png)
+![Şekil 9](sekiller/sekil09_duyarlilik.png)
 
-**Şekil 8.** Buharlaşma sıcaklığının net güç, ısıl verim ve ekserji verimine etkisi. **[H]**
+**Şekil 9.** Buharlaşma sıcaklığının net güç, ısıl verim ve ekserji verimine etkisi. **[H]**
 
 **Tartışma.**
 
-1. **Isı değiştirici tersinmezliği baskındır.** R245fa çevriminde ısı değiştiricideki ekserji yıkımı (52.1 kW), egzoz ekserjisinin %48'ine eşittir. Bunun nedeni 500 °C'lik egzozdan ısının 140 °C'de buharlaşan bir akışkana aktarılmasıdır. Buharlaşma sıcaklığı yükseldikçe bu yıkım azalır (Şekil 8) ve sıralama R245fa < etanol < toluen < su olur. Bu sonuç Teng vd. [21]'nin süperkritik ORC önerisinin ve Yağlı vd. [22]'nin süperkritik çevrimde bulduğu küçük üstünlüğün termodinamik gerekçesidir. Kaynak ile akışkan arasındaki sıcaklık uyumunun iyileşmesi, ısı değiştiricideki yıkımı azaltır.
+1. **Isı değiştirici tersinmezliği baskındır.** R245fa çevriminde ısı değiştiricideki ekserji yıkımı (52.1 kW), egzoz ekserjisinin %48'ine eşittir. Bunun nedeni 500 °C'lik egzozdan ısının 140 °C'de buharlaşan bir akışkana aktarılmasıdır. Buharlaşma sıcaklığı yükseldikçe bu yıkım azalır (Şekil 9) ve sıralama R245fa < etanol < toluen < su olur. Bu sonuç Teng vd. [21]'nin süperkritik ORC önerisinin ve Yağlı vd. [22]'nin süperkritik çevrimde bulduğu küçük üstünlüğün termodinamik gerekçesidir. Kaynak ile akışkan arasındaki sıcaklık uyumunun iyileşmesi, ısı değiştiricideki yıkımı azaltır.
 2. **R245fa yüksek sıcaklıklı egzoz için uygun değildir.** Kritik sıcaklığının düşük olması (154 °C) buharlaşma sıcaklığını sınırlar. Genleştirici çıkışı 88 °C kızgın buhardır; bu yüzden rejeneratör kullanılmazsa önemli miktarda ekserji yoğuşturucuda kaybolur (16.7 kW). R245fa ile egzozda %20.9 ekserji verimi bulunmuştur. Yu vd. [10] aynı akışkanla dizel motorda %21.7'ye kadar ekserji verimi bildirmiştir. Değerler benzerdir, ancak çalışma koşulları ve ekserji verimi tanımları farklı olduğundan bu benzerlik birebir doğrulama sayılmamalıdır.
 3. **Su çevrimi ideal koşullarda en yüksek gücü verir, fakat pratik sınırları vardır.** Yoğuşturucu basıncı 50 °C'de 0.12 bar'dır; araçta vakum sızdırmazlığı gerekir. Genleştirici çıkışında kuruluk x₄ = 0.962 olduğundan ıslak genleşme oluşur. Hacimsel debi düşük olduğundan pistonlu genleştirici gerekir [5]. Ayrıca kışın donma riski vardır. Mavridou vd. [5] aynı motor ve su koşulları için %6–10 verim kazancı öngörür. Bu çalışmada bulunan 42.8 kW, 362 kW'lık anma gücünün yaklaşık %11.8'idir; ancak bu hesap ideal bileşen kabulüne dayandığı için üst sınır niteliğindedir. Ayrıca 1300 rpm'deki %100 yük gücü yayında verilmediği için oran yalnızca yaklaşık bir karşılaştırma sağlar.
 4. **Yoğuşma sıcaklığının etkisi büyüktür.** Yoğuşma sıcaklığı 50 °C'den 90 °C'ye çıkarıldığında R245fa'nın net gücü %44, etanolünki %26, suyunki %23 azalır. Araçta yoğuşturucu ya motor radyatörüyle ortak çalışır ya da ikinci bir radyatör gerektirir [5]. Bu nedenle yoğuşma sıcaklığı, laboratuvar deneylerindeki değerlerden yüksek olur. Simülasyon–deney farkının [12] bir nedeni budur.
@@ -486,11 +494,11 @@ Aynı egzoz kaynağı (503.5 °C, 0.49 kg/s; egzozun 25 °C'ye göre termal ekse
 
 ### 5.4 Literatürde raporlanan kazanımların karşılaştırılması
 
-Şekil 9, farklı çalışmalarda raporlanan kazanımları ölçüt türüne göre iki panelde gösterir. Sol panel yakıt tüketimindeki veya BSFC'deki iyileşmeyi, sağ panel güç ya da verimdeki artışı gösterir.
+Şekil 10, farklı çalışmalarda raporlanan kazanımları ölçüt türüne göre iki panelde gösterir. Sol panel yakıt tüketimindeki veya BSFC'deki iyileşmeyi, sağ panel güç ya da verimdeki artışı gösterir.
 
-![Şekil 9](sekiller/sekil09_literatur_kazanimlar.png)
+![Şekil 10](sekiller/sekil10_literatur_kazanimlar.png)
 
-**Şekil 9.** Literatürde raporlanan atık ısı geri kazanım kazanımları. **[L→Ç]** Değerler belirtilen yayınlardan aktarılmıştır. Çalışma koşulları farklı olduğu için değerler doğrudan eşdeğer değildir.
+**Şekil 10.** Literatürde raporlanan atık ısı geri kazanım kazanımları. **[L→Ç]** Değerler belirtilen yayınlardan aktarılmıştır. Çalışma koşulları farklı olduğu için değerler doğrudan eşdeğer değildir.
 
 **Karşılaştırmada dikkat edilmesi gerekenler [H].**
 
@@ -512,17 +520,17 @@ Aynı egzoz kaynağı (503.5 °C, 0.49 kg/s; egzozun 25 °C'ye göre termal ekse
 
 ### 5.6 TEG ve turbo-kompaund için tamamlayıcı hesaplar [H]
 
-**TEG.** Ioffe bağıntısına (Denklem 12) göre ZT = 1 olan bir malzeme için modül verimi %7.8 bulunmuştur (T_h = 250 °C, T_c = 50 °C). Kim vd. [13]'nin ölçtüğü %2.8 bu değerin yaklaşık üçte biridir (Şekil 10). Aradaki farkın olası nedenleri şunlardır: egzoz–modül ve modül–soğutucu arasındaki ısıl direnç nedeniyle modül yüzeylerindeki sıcaklık farkının gaz–su farkından küçük olması, yüzeyde sıcaklığın üniform olmaması [2] ve yük uyumsuzluğu [46]. Kim vd. [13]'nin verilerinden, azami güç noktasında modüllerden geçen ısı akısı yaklaşık 119 W / 0.028 ≈ 4.25 kW olarak türetilir. Bu değer Şekil 2'deki 34–136 kW'lık egzoz ısısının küçük bir bölümüdür. TEG'in güç kapasitesini ısı değiştirici tasarımı sınırlar.
+**TEG.** Ioffe bağıntısına (Denklem 12) göre ZT = 1 olan bir malzeme için modül verimi %7.8 bulunmuştur (T_h = 250 °C, T_c = 50 °C). Kim vd. [13]'nin ölçtüğü %2.8 bu değerin yaklaşık üçte biridir (Şekil 11). Aradaki farkın olası nedenleri şunlardır: egzoz–modül ve modül–soğutucu arasındaki ısıl direnç nedeniyle modül yüzeylerindeki sıcaklık farkının gaz–su farkından küçük olması, yüzeyde sıcaklığın üniform olmaması [2] ve yük uyumsuzluğu [46]. Kim vd. [13]'nin verilerinden, azami güç noktasında modüllerden geçen ısı akısı yaklaşık 119 W / 0.028 ≈ 4.25 kW olarak türetilir. Bu değer Şekil 2'deki 34–136 kW'lık egzoz ısısının küçük bir bölümüdür. TEG'in güç kapasitesini ısı değiştirici tasarımı sınırlar.
 
-![Şekil 10](sekiller/sekil10_teg_verim.png)
+![Şekil 11](sekiller/sekil11_teg_verim.png)
 
-**Şekil 10.** Termoelektrik modülün kuramsal verimi ve ZT'ye bağlılığı. **[H]** Karşılaştırma noktası Kim vd. [13]'den **[L]** alınmıştır.
+**Şekil 11.** Termoelektrik modülün kuramsal verimi ve ZT'ye bağlılığı. **[H]** Karşılaştırma noktası Kim vd. [13]'den **[L]** alınmıştır.
 
-**Güç türbini.** Mavridou egzozu için (503.5 °C, 0.49 kg/s), %70 türbin verimiyle brüt türbin gücü şöyle bulunmuştur: PR = 1.2 için 13.9 kW, PR = 1.4 için 25.1 kW, PR = 1.6 için 34.5 kW (Şekil 11). Bu değerler brüttür. Türbinin oluşturduğu ters basınç motorun pompalama işini artırır ve Pasini vd. [7]'nin gösterdiği gibi sabit noktada net kazancı ≈%1'e indirebilir. Dolayısıyla Şekil 11 yalnızca üst sınırı gösterir.
+**Güç türbini.** Mavridou egzozu için (503.5 °C, 0.49 kg/s), %70 türbin verimiyle brüt türbin gücü şöyle bulunmuştur: PR = 1.2 için 13.9 kW, PR = 1.4 için 25.1 kW, PR = 1.6 için 34.5 kW (Şekil 12). Bu değerler brüttür. Türbinin oluşturduğu ters basınç motorun pompalama işini artırır ve Pasini vd. [7]'nin gösterdiği gibi sabit noktada net kazancı ≈%1'e indirebilir. Dolayısıyla Şekil 12 yalnızca üst sınırı gösterir.
 
-![Şekil 11](sekiller/sekil11_guc_turbini.png)
+![Şekil 12](sekiller/sekil12_guc_turbini.png)
 
-**Şekil 11.** Seri güç türbininden elde edilebilecek brüt güç. **[H]** Egzoz koşulları Mavridou vd. [5] Tablo 1'dendir.
+**Şekil 12.** Seri güç türbininden elde edilebilecek brüt güç. **[H]** Egzoz koşulları Mavridou vd. [5] Tablo 1'dendir.
 
 ### 5.7 Uygulanabilirlik değerlendirmesi [H]
 

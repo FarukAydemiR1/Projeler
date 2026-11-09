@@ -273,7 +273,7 @@ plt.ylabel("Sıcaklık [°C]")
 plt.ylim(0, 560)
 plt.legend(loc="upper left")
 plt.title("Egzoz ısı değiştiricisi T–Q diyagramı (tasarım noktası %100 yük, 1300 rpm)")
-kaydet("sekil04_TQ_mavridou.png",
+kaydet("sekil05_TQ_mavridou.png",
        "Veri: Mavridou vd. (2010) [5], Tablo 2. Grafik ve pinch değeri (318.02 − 239.2 = 78.8 K) bu çalışmada "
        "türetilmiştir.")
 
@@ -296,7 +296,7 @@ h1_, l1 = ax1.get_legend_handles_labels()
 h2_, l2 = ax2.get_legend_handles_labels()
 ax1.legend(h1_ + h2_, l1 + l2, loc="upper right", fontsize=8)
 plt.title("Aynı ısı yükü (136.44 kW) için yedi egzoz ısı değiştiricisi tasarımının karşılaştırması")
-kaydet("sekil05_mavridou_tablo6.png",
+kaydet("sekil06_mavridou_tablo6.png",
        "Veri: Mavridou vd. (2010) [5], Tablo 6a–6b (makaledeki Şekil 8'in veri kaynağı). Çukurcuklu borularda Δp/Δp₀ "
        "makalede 0.8–1.1 aralığı olarak verilmiştir. Grafik bu çalışmada çizilmiştir.")
 
@@ -342,7 +342,7 @@ for ax, c in zip(axs.flat, cevrimler):
     ax.legend(fontsize=7.5, loc="upper left")
 plt.suptitle("Basit Rankine/ORC çevrimlerinin T–s diyagramları (bu çalışmada hesaplanmıştır)", y=1.01)
 plt.tight_layout()
-kaydet("sekil06_Ts_kendi_hesap.png",
+kaydet("sekil07_Ts_kendi_hesap.png",
        "BU ÇALIŞMADA YAPILAN HESAP (literatür sonucu değildir). Isı kaynağı: Mavridou vd. (2010) [5] Tablo 1, %100 yük/1300 rpm "
        "(503.5 °C, 0.49 kg/s). Varsayımlar: ηgenleştirici=0.70, ηpompa=0.60, Tkond=50 °C, pinch=30 K, egzoz çıkışı ≥120 °C. "
        "Özellikler: CoolProp 8.0. Su çevrimi Mavridou Tablo 2 koşullarında (33 bar, 394.2 °C) kurulmuştur.")
@@ -366,7 +366,7 @@ plt.xlabel("Özgül entalpi h [kJ/kg]")
 plt.ylabel("Basınç P [bar]")
 plt.legend()
 plt.title("R245fa ORC P–h diyagramı (Tbuh=140 °C, Tkond=50 °C)")
-kaydet("sekil07_Ph_R245fa.png",
+kaydet("sekil08_Ph_R245fa.png",
        "BU ÇALIŞMADA YAPILAN HESAP. Durumlar: 1 pompa girişi, 2 pompa çıkışı, 3 genleştirici girişi, 4 genleştirici çıkışı. "
        "Akışkan özellikleri CoolProp 8.0.")
 
@@ -385,8 +385,8 @@ ax[1].set_xlabel("Buharlaşma sıcaklığı [°C]")
 ax[1].set_ylabel("Verim [%]")
 ax[1].legend(fontsize=7.5)
 ax[1].set_title("(b) Isıl ve ekserji verimi")
-kaydet("sekil08_duyarlilik.png",
-       "BU ÇALIŞMADA YAPILAN HESAP. ηII = Ẇnet / egzozun 25 °C ölü hale göre termal ekserjisi. Diğer varsayımlar Şekil 6 ile aynıdır.")
+kaydet("sekil09_duyarlilik.png",
+       "BU ÇALIŞMADA YAPILAN HESAP. ηII = Ẇnet / egzozun 25 °C ölü hale göre termal ekserjisi. Diğer varsayımlar Şekil 7 ile aynıdır.")
 
 # Şekil H — Literatürde raporlanan kazanımlar (metrik türüne göre ayrılmış)
 lit_a = [  # yakıt tüketimi / BSFC iyileşmesi [%]
@@ -417,7 +417,7 @@ for ax, veri, bas in ((axs[0], lit_a, "(a) Yakıt tüketimi / BSFC iyileşmesi [
     ax.set_title(bas, fontsize=10)
     ax.set_xlim(0, 27)
 plt.tight_layout()
-kaydet("sekil09_literatur_kazanimlar.png",
+kaydet("sekil10_literatur_kazanimlar.png",
        "Veriler belirtilen yayınların özetlerinden/sonuç bölümlerinden aktarılmıştır. Çalışma koşulları (motor, yük, çevrim, deney/simülasyon) "
        "farklı olduğundan değerler doğrudan eşdeğer değildir; yalnızca büyüklük mertebesini göstermek içindir. Grafik bu çalışmada çizilmiştir.")
 
@@ -432,7 +432,7 @@ plt.xlabel("Boyutsuz başarım katsayısı ZT [–]")
 plt.ylabel("Modül dönüşüm verimi [%]")
 plt.legend()
 plt.title("Termoelektrik modülün kuramsal verimi")
-kaydet("sekil10_teg_verim.png",
+kaydet("sekil11_teg_verim.png",
        "BU ÇALIŞMADA YAPILAN HESAP: η = (ΔT/Th)·(√(1+ZT)−1)/(√(1+ZT)+Tc/Th). Karşılaştırma noktası Kim vd. (2016) [13] özetinden alınmıştır.")
 
 # Şekil J — Güç türbini kaba kestirimi
@@ -443,7 +443,7 @@ plt.xlabel("Güç türbini genleşme oranı [–]")
 plt.ylabel("Türbin mili gücü [kW]")
 plt.legend()
 plt.title("Seri güç türbininde elde edilebilecek brüt güç (ters basınç cezası hariç)")
-kaydet("sekil11_guc_turbini.png",
+kaydet("sekil12_guc_turbini.png",
        "BU ÇALIŞMADA YAPILAN HESAP: Ẇ = ṁ·cp·Tgiriş·ηT·[1−PR^(−(γ−1)/γ)], ηT=0.70, γ=1.34. Egzoz koşulları Mavridou vd. (2010) [5] Tablo 1. "
        "Brüt değerdir; artan ters basıncın motor pompalama işine etkisi (bkz. Pasini vd. [7]) düşülmemiştir.")
 
@@ -493,9 +493,36 @@ ax.plot([8.1, 8.1, 5.1], [1.3, 0.6, 0.6], color=RENK[0], lw=1.6, alpha=0)
 ok(7.0, 1.5, 6.2, 0.7, RENK[0])
 ok(4.0, 0.6, 3.0, 0.6, RENK[0])
 ax.set_title("Ağır vasıta dizel motoru için su-buharlı alt (bottoming) Rankine çevrimi yerleşimi", fontsize=10)
-kaydet("sekil03_sistem_semasi.png",
+kaydet("sekil04_sistem_semasi.png",
        "Mavridou vd. (2010) [5] Şekil 1 ve Bölüm 2'deki anlatıma dayanarak bu çalışmada yeniden çizilmiş ŞEMATİK gösterimdir (orijinal şekil değildir). "
        "Sıcaklık/basınç değerleri aynı makalenin Tablo 2'sinden alınmıştır.")
+
+# Şekil L — Çalışmanın yöntem akış şeması
+ADIMLAR = [
+    ("ADIM 1", "Literatür taraması", "Crossref, OpenAlex, Semantic Scholar, SAE Mobilus,\nkurumsal arşivler; 2006–2024; anahtar kelime sorguları"),
+    ("ADIM 2", "Kaynak doğrulama ve seçim", "DOI çözümleme, yazar/cilt/sayfa kontrolü;\nkonu, sayısal veri ve yayın türü ölçütleri → 52 kaynak"),
+    ("ADIM 3", "Veri çıkarımı [L]", "Özet ve açık erişimli tam metinlerden sayısal bulgular,\norijinal tablo/şekil numaraları, tasarım parametreleri"),
+    ("ADIM 4", "Bağımsız doğrulama [H]", "Mavridou vd. [5] Tablo 2 verisiyle LMTD, UA ve\nIAPWS-95 su tarafı enerji dengesi"),
+    ("ADIM 5", "Çevrim analizi [H]", "R245fa / etanol / toluen / su için enerji ve ekserji analizi,\nyoğuşma ve buharlaşma sıcaklığı duyarlılığı (CoolProp)"),
+    ("ADIM 6", "Karşılaştırma ve değerlendirme", "Literatür sonuçlarının ölçüt türüne göre karşılaştırılması,\nçelişkilerin nedenleri, uygulanabilirlik ve öneriler"),
+]
+fig, ax = plt.subplots(figsize=(8, 5.4))
+ax.set_axis_off()
+ax.set_xlim(0, 10)
+ax.set_ylim(0.1, len(ADIMLAR) * 1.2)
+for i, (no, bas, acik) in enumerate(ADIMLAR):
+    y = (len(ADIMLAR) - 1 - i) * 1.2 + 0.15
+    renk = "#e8eef4" if "[H]" not in bas else "#dcefd9"
+    ax.add_patch(plt.Rectangle((0.3, y), 9.4, 0.85, fc=renk, ec="#1f3b57", lw=1.2))
+    ax.add_patch(plt.Rectangle((0.3, y), 1.4, 0.85, fc="#1f3b57", ec="#1f3b57"))
+    ax.text(1.0, y + 0.425, no, color="white", ha="center", va="center", fontsize=9, fontweight="bold")
+    ax.text(1.95, y + 0.6, bas, ha="left", va="center", fontsize=10, fontweight="bold", color="#1f3b57")
+    ax.text(1.95, y + 0.27, acik, ha="left", va="center", fontsize=7.8, color="#333333")
+    if i < len(ADIMLAR) - 1:
+        ax.annotate("", xy=(5.0, y - 0.33), xytext=(5.0, y), arrowprops=dict(arrowstyle="-|>", color="#1f3b57", lw=1.4))
+plt.gca().grid(False)
+plt.savefig(os.path.join(SEKIL, "sekil03_yontem_akisi.png"))
+plt.close()
 
 with open(os.path.join(BURADA, "sonuclar.json"), "w", encoding="utf-8") as f:
     json.dump(SONUC, f, ensure_ascii=False, indent=1, default=float)
