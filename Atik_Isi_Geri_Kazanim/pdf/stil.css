@@ -1,0 +1,87 @@
+@page { size: A4; }
+:root { --lacivert: #1f3b57; --gri: #555; --cizgi: #222; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  font-family: "Liberation Serif", "Times New Roman", serif;
+  font-size: 10.5pt; line-height: 1.38; color: #111; margin: 0;
+  hyphens: auto; -webkit-hyphens: auto;
+}
+main p, main li { text-align: justify; }
+p { margin: 0 0 6pt 0; text-indent: 0; }
+
+/* Başlıklar — IEEE benzeri */
+h2 {
+  font-size: 11.5pt; font-weight: bold; text-align: center; text-transform: uppercase;
+  letter-spacing: .3pt; margin: 16pt 0 8pt; color: var(--lacivert);
+  break-after: avoid; page-break-after: avoid;
+}
+h3 { font-size: 10.5pt; font-style: italic; font-weight: bold; margin: 11pt 0 5pt; break-after: avoid; color: #111; }
+h4 { font-size: 10.5pt; font-style: italic; font-weight: normal; margin: 9pt 0 4pt; break-after: avoid; }
+h2.kaynakca-h { break-before: page; }
+
+/* Özet kutusu */
+h2.ozet-h { margin-top: 0; }
+.ozet {
+  border-top: 1.2pt solid var(--lacivert); border-bottom: 1.2pt solid var(--lacivert);
+  padding: 7pt 4pt 2pt; margin-bottom: 10pt; font-size: 10pt;
+}
+.ozet p:first-child, .ozet p { text-align: justify; }
+
+/* Tablolar */
+.tbaslik { text-align: center; margin: 12pt 0 5pt; break-after: avoid; page-break-after: avoid; }
+.tno { font-size: 9.5pt; letter-spacing: .6pt; font-weight: bold; }
+.tad { font-size: 9pt; font-variant: normal; margin-top: 1pt; }
+.tnot { font-size: 8pt; color: var(--gri); font-style: italic; margin-top: 2pt; }
+table {
+  border-collapse: collapse; width: 100%; font-size: 8.4pt; line-height: 1.25;
+  margin: 0 0 12pt; border-top: 1.4pt solid var(--cizgi); border-bottom: 1.4pt solid var(--cizgi);
+  break-inside: auto;
+}
+thead th { border-bottom: .8pt solid var(--cizgi); font-weight: bold; background: #eef2f6; }
+th, td { padding: 2.6pt 4pt; vertical-align: top; text-align: left; }
+tbody tr:nth-child(even) td { background: #f7f8fa; }
+tr { break-inside: avoid; }
+
+/* Şekiller */
+figure.sekil { margin: 10pt auto 12pt; text-align: center; break-inside: avoid; page-break-inside: avoid; }
+figure.sekil img { max-width: 100%; max-height: 118mm; }
+figcaption { font-size: 8.8pt; text-align: justify; margin: 4pt 6mm 0; line-height: 1.3; }
+.sno { font-weight: bold; }
+
+/* Denklemler */
+math[display="block"] { margin: 6pt 0; font-size: 11pt; }
+span.math.display { display: block; text-align: center; }
+
+code { font-family: "Liberation Mono", monospace; font-size: 8.8pt; background: #f1f3f5; padding: 0 2pt; }
+pre { background: #f1f3f5; padding: 5pt 7pt; font-size: 8.5pt; border-left: 2pt solid var(--lacivert); }
+ul, ol { margin: 2pt 0 7pt; padding-left: 18pt; }
+li { margin-bottom: 2pt; }
+strong { font-weight: bold; }
+
+/* Kaynakça */
+.kay { font-size: 8.8pt; line-height: 1.3; padding-left: 26pt; text-indent: -26pt; margin-bottom: 3.5pt; text-align: left !important; }
+.kno { display: inline-block; width: 26pt; text-indent: 0; }
+
+/* Kapak + içindekiler */
+.kapak { height: 253mm; display: flex; flex-direction: column; justify-content: space-between; break-after: page; }
+.kapak .ust { border-top: 5pt solid var(--lacivert); padding-top: 14mm; text-align: center; }
+.kapak .tur { font-size: 11pt; letter-spacing: 2pt; color: var(--gri); text-transform: uppercase; }
+.kapak h1 { font-size: 22pt; line-height: 1.25; color: var(--lacivert); margin: 22mm 6mm 8mm; text-align: center; }
+.kapak .alt { font-size: 13pt; font-style: italic; color: #333; margin: 0 14mm; }
+.kapak .bilgi { text-align: center; font-size: 10.5pt; color: #333; line-height: 1.7; }
+.kapak .bilgi .ayrac { width: 40mm; border-top: .8pt solid #999; margin: 0 auto 6mm; }
+.kapak .alt-serit { border-bottom: 5pt solid var(--lacivert); padding-bottom: 6mm; text-align: center; font-size: 9pt; color: var(--gri); }
+.icindekiler h2 { margin-top: 0; }
+.toc2, .toc3 { display: flex; align-items: baseline; font-size: 10.2pt; margin: 2.5pt 0; }
+.toc2 { font-weight: bold; margin-top: 6pt; }
+.toc3 { padding-left: 16pt; font-size: 9.8pt; }
+.tm { flex: 0 1 auto; }
+.toc2::after, .toc3::after { content: none; }
+.toc2 .tn, .toc3 .tn { flex: 0 0 auto; text-align: right; min-width: 14pt; }
+.toc2 .tm::after, .toc3 .tm::after { content: ""; }
+.nokta { flex: 1; border-bottom: .8pt dotted #888; margin: 0 4pt; transform: translateY(-3pt); }
+
+.denklem { display: flex; align-items: center; width: 100%; margin: 4pt 0; }
+.denklem > .dm { flex: 1; text-align: center; }
+.dn { flex: 0 0 auto; font-size: 10.5pt; padding-left: 6pt; }
+sub { font-size: 70%; }

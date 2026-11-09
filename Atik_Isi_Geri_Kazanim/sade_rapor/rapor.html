@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><title>Atık Isı Geri Kazanımı: ORC Tasarımı</title>
+<link rel="stylesheet" href="stil.css"></head>
+<body>
+
+<h1>İÇTEN YANMALI MOTORLARDA ATIK ISI GERİ KAZANIMI:<br>14 MW GEMİ DİZEL MOTORU İÇİN ORC SİSTEM TASARIMI</h1>
+
+<p class="ozet ni"><b>Özet—</b>İçten yanmalı motorlarda yakıt enerjisinin büyük bölümü egzoz gazı ve soğutma suyuyla çevreye atılır. Bu çalışmada atık ısı geri kazanım teknolojileri (termoelektrik jeneratör, turbo-kompaund, buhar ve organik Rankine çevrimi) kısaca karşılaştırılmış, ardından 14 MW gücünde bir gemi dizel motorunun egzozu için R245fa akışkanlı bir organik Rankine çevrimi (ORC) tasarlanmıştır. Çevrim, akışkan özellikleri CoolProp ile alınarak 1-B enerji ve ekserji dengesiyle hesaplanmış; evaporatör bölgesel LMTD yöntemiyle boyutlandırılmıştır. Egzozun 320 °C'den 140 °C'ye soğutulmasıyla 4.725 kW ısı geri kazanılmakta, sistem 578 kW net güç üretmektedir. Bu değer %12,2 ısıl verime ve ana makine gücüne göre yaklaşık %4,1 ek güce karşılık gelir. Gerekli efektif ısı transfer alanı yaklaşık 780 m²'dir.</p>
+<p class="anahtar ni"><b>Anahtar Kelimeler—</b>Atık ısı geri kazanımı, ORC, R245fa, evaporatör tasarımı, egzoz ters basıncı.</p>
+
+<h2>I. Giriş ve Literatür Taraması</h2>
+<p>İçten yanmalı motorlarda yakıt enerjisinin yaklaşık %30–40'ı egzoz gazıyla atılır [1]. Ağır dizel motorlarda yüksek sıcaklıklı kaynaklar egzoz (200–600 °C) ve EGR (200–750 °C), düşük sıcaklıklı kaynaklar ise soğutma suyu (80–100 °C), yağlama yağı (80–120 °C) ve şarj havası soğutucusudur (50–70 °C) [2]. Egzoz, sıcaklığı yüksek olduğu için ekserjisi en yüksek kaynaktır. Soğutma suyunun enerjisi büyük, ekserjisi ise düşüktür. Gemi motorlarında aynı teknolojiler daha büyük ölçekte uygulanmaktadır [3]. Literatürde öne çıkan dört yöntem şunlardır:</p>
+<ul>
+<li><b>Termoelektrik jeneratör (TEG):</b> Sıcaklık farkını Seebeck etkisiyle doğrudan elektriğe çevirir; hareketli parça içermez [4]. Verimi düşüktür: 40 modüllü bir dizel egzoz TEG'i en fazla 119 W güç ve %2,8 dönüşüm verimi vermiştir [5].</li>
+<li><b>Turbo-kompaund (TC):</b> Egzoza yerleştirilen güç türbini kalan enerjiyi mekanik ya da elektrik işe çevirir [6]. Kazancı ters basınca ve yük profiline bağlıdır. Küçük bir benzinli motorda elektrik turbo-kompaund BSFC'yi en fazla %4 iyileştirmiş, sabit çalışma noktasında ise kazanç yaklaşık %1'de kalmıştır [7].</li>
+<li><b>Buhar Rankine çevrimi (SRC):</b> Yüksek egzoz sıcaklıklarında verimlidir. Düşük ve orta sıcaklıkta ise kızdırma yetersiz kalır ve genleşme sonunda ıslak buhar oluşur [8].</li>
+<li><b>Organik Rankine çevrimi (ORC):</b> Düşük kaynama noktalı organik akışkanlarla orta ve düşük sıcaklıklı ısıyı değerlendirir. Ticari olarak yaygın bir teknolojidir [9]. Ağır vasıta dizel motorunda deneysel olarak %3–5 yakıt tasarrufu gösterilmiştir [10]. Simülasyonlar ise deneylerden belirgin şekilde yüksek güç öngörür (0–60 kW'a karşı 0–14 kW) [11].</li>
+</ul>
+<p>320 °C'lik egzoz sıcaklığı, megavat ölçeğindeki güç ve ticari olgunluk birlikte değerlendirildiğinde bu çalışma için ORC seçilmiştir.</p>
+
+<h2>II. Tasarım Metodolojisi</h2>
+<p>Tasarım Şekil 1'deki beş adımda yürütülmüştür.</p>
+<figure><img src="s1_akis.png" style="width:72%"><figcaption>Şekil 1. Tasarım ve analiz adımları.</figcaption></figure>
+
+<h3>A. Adım 1: Sınır koşulları</h3>
+<p>Motor ve çevrim için kullanılan tasarım kabulleri Tablo I'de verilmiştir. Kükürtlü yakıtta çiğ noktası korozyonunu önlemek için egzoz çıkış sıcaklığı 140 °C ile sınırlandırılmıştır. Kondenser deniz suyuyla soğutulur; 25 °C deniz suyu için yoğuşma sıcaklığı 40 °C alınmıştır.</p>
+<div class="tblok"><div class="tb"><div class="no">TABLO I</div>TASARIM VERİLERİ VE KABULLER</div>
+<table>
+<tr><th>Parametre</th><th>Sembol</th><th>Değer</th><th>Birim</th></tr>
+<tr><td>Ana makine gücü (MCR)</td><td>—</td><td>14</td><td>MW</td></tr>
+<tr><td>Egzoz debisi</td><td>ṁ<sub>egz</sub></td><td>25,0</td><td>kg/s</td></tr>
+<tr><td>Egzoz giriş / çıkış sıcaklığı</td><td>T<sub>egz,g</sub> / T<sub>egz,ç</sub></td><td>320 / 140</td><td>°C</td></tr>
+<tr><td>Egzoz özgül ısısı</td><td>c<sub>p,egz</sub></td><td>1,05</td><td>kJ/kg·K</td></tr>
+<tr><td>Evaporatör basıncı</td><td>P<sub>yüksek</sub></td><td>19,0</td><td>bar</td></tr>
+<tr><td>Kızdırma</td><td>ΔT<sub>kız</sub></td><td>10</td><td>K</td></tr>
+<tr><td>Yoğuşma sıcaklığı / basıncı</td><td>T<sub>kond</sub> / P<sub>düşük</sub></td><td>40 / 2,51</td><td>°C / bar</td></tr>
+<tr><td>Türbin / pompa izentropik verimi</td><td>η<sub>t</sub> / η<sub>p</sub></td><td>0,80 / 0,75</td><td>—</td></tr>
+<tr><td>Evaporatör toplam ısı transfer katsayısı (kanatlı boru, gaz tarafı belirleyici)</td><td>U</td><td>50</td><td>W/m²·K</td></tr>
+</table></div>
+
+<h3>B. Adım 2: İş akışkanının seçimi</h3>
+<p>Akışkan seçimi termodinamik performans, güvenlik ve çevresel etki birlikte değerlendirilerek yapılır [12]. Aday akışkanlar Tablo II'de karşılaştırılmıştır. Toluen ve metanol yüksek kritik sıcaklıkları sayesinde termodinamik açıdan avantajlıdır, ancak yanıcıdır; bu da kapalı makine dairesinde risk oluşturur. R123'ün ozon tüketme potansiyeli sıfır değildir. Bu nedenle yanıcı olmayan ve ozon tüketmeyen R245fa seçilmiştir. R245fa kuru bir akışkandır; genleşme sonunda kızgın buhar bölgesinde kalır ve türbinde damlacık oluşmaz.</p>
+<div class="tblok"><div class="tb"><div class="no">TABLO II</div>ADAY İŞ AKIŞKANLARI</div>
+<table>
+<tr><th>Akışkan</th><th>T<sub>kr</sub> [°C]</th><th>P<sub>kr</sub> [bar]</th><th>Güvenlik (ASHRAE 34)</th><th>Not</th></tr>
+<tr><td>Toluen</td><td>318,6</td><td>41,3</td><td>Yanıcı</td><td>Yüksek verim, yangın riski</td></tr>
+<tr><td>Metanol</td><td>240,2</td><td>82,2</td><td>Yanıcı</td><td>Islak akışkan, toksik</td></tr>
+<tr><td>R123</td><td>183,7</td><td>36,6</td><td>B1</td><td>ODP ≈ 0,02; GWP 77</td></tr>
+<tr><td>R245fa</td><td>153,9</td><td>36,5</td><td>B1</td><td>ODP 0; GWP 1030; kuru akışkan</td></tr>
+</table>
+<p class="not">Kritik değerler CoolProp [13] ile alınmıştır. GWP değerleri IPCC AR4'e (100 yıl) göredir.</p></div>
+
+<h2>III. Termodinamik Hesaplar</h2>
+<h3>A. Adım 3: Çevrim hesabı</h3>
+<p>Hal noktaları CoolProp [13] ile hesaplanmıştır (Tablo III). Durum 1 kondenser çıkışındaki doymuş sıvı, durum 2 pompa çıkışı, durum 3 türbin girişindeki kızgın buhar, durum 4 türbin çıkışıdır. 19 bar'da R245fa'nın doyma sıcaklığı 119,2 °C'dir.</p>
+<div class="tblok"><div class="tb"><div class="no">TABLO III</div>ÇEVRİM HAL NOKTALARI</div>
+<table>
+<tr><th>Durum</th><th>P [bar]</th><th>T [°C]</th><th>h [kJ/kg]</th><th>Hal</th></tr>
+<tr><td>1 – Pompa girişi</td><td>2,51</td><td>40,0</td><td>253,0</td><td>Doymuş sıvı</td></tr>
+<tr><td>2 – Pompa çıkışı</td><td>19,0</td><td>41,0</td><td>254,7</td><td>Sıkıştırılmış sıvı</td></tr>
+<tr><td>3 – Türbin girişi</td><td>19,0</td><td>129,2</td><td>499,9</td><td>Kızgın buhar</td></tr>
+<tr><td>4 – Türbin çıkışı</td><td>2,51</td><td>73,9</td><td>468,2</td><td>Kızgın buhar</td></tr>
+</table></div>
+<p>Egzozdan alınan ısı ve akışkan debisi:</p>
+<div class="eq"><span class="f">Q̇<sub>giren</sub> = ṁ<sub>egz</sub> · c<sub>p,egz</sub> · (T<sub>egz,g</sub> − T<sub>egz,ç</sub>) = 25 · 1,05 · (320 − 140) = 4.725 kW</span><span class="nr">(1)</span></div>
+<div class="eq"><span class="f">ṁ<sub>orc</sub> = Q̇<sub>giren</sub> / (h<sub>3</sub> − h<sub>2</sub>) = 19,27 kg/s</span><span class="nr">(2)</span></div>
+<p>Türbin ve pompa güçleri, net güç ve ısıl verim:</p>
+<div class="eq"><span class="f">Ẇ<sub>t</sub> = ṁ<sub>orc</sub>(h<sub>3</sub> − h<sub>4</sub>) = 610,8 kW,  Ẇ<sub>p</sub> = ṁ<sub>orc</sub>(h<sub>2</sub> − h<sub>1</sub>) = 32,6 kW</span><span class="nr">(3)</span></div>
+<div class="eq"><span class="f">Ẇ<sub>net</sub> = Ẇ<sub>t</sub> − Ẇ<sub>p</sub> = 578 kW,  η<sub>th</sub> = Ẇ<sub>net</sub> / Q̇<sub>giren</sub> = %12,2</span><span class="nr">(4)</span></div>
+<p>Egzozdan alınan ekserji, mükemmel gaz kabulüyle Ėx = ṁc<sub>p</sub>[(T<sub>g</sub> − T<sub>ç</sub>) − T<sub>0</sub> ln(T<sub>g</sub>/T<sub>ç</sub>)] = 1.894,7 kW'tır (T<sub>0</sub> = 25 °C). Buna göre ikinci yasa verimi η<sub>II</sub> = Ẇ<sub>net</sub>/Ėx = %30,5 olur. Kondenserde deniz suyuna 4.146,8 kW ısı atılır.</p>
+
+<h3>B. Adım 4: Evaporatör boyutlandırma</h3>
+<p>Evaporatörde akışkan önce sıvı olarak ısınır, sonra sabit sıcaklıkta buharlaşır. Bu nedenle tek bir ε-NTU bağıntısı yerine iki bölgeli LMTD yöntemi kullanılmıştır [14]: bölge 1 ön ısıtıcı, bölge 2 buharlaştırıcı ile kızdırıcının toplamıdır. Akışkan kabarcık noktasına (119,2 °C) ulaştığında egzoz sıcaklığı 226,1 °C'dir. Pinch sıcaklık farkı yaklaşık 106,9 K olduğundan ısı transferi her noktada mümkündür (Şekil 3b).</p>
+<div class="eq"><span class="f">ΔT<sub>lm</sub> = (ΔT<sub>a</sub> − ΔT<sub>b</sub>) / ln(ΔT<sub>a</sub>/ΔT<sub>b</sub>),  A = Q̇ / (U · ΔT<sub>lm</sub>)</span><span class="nr">(5)</span></div>
+<div class="tblok"><div class="tb"><div class="no">TABLO IV</div>HESAP SONUÇLARININ ÖZETİ</div>
+<table>
+<tr><th>Büyüklük</th><th>Değer</th><th>Birim</th></tr>
+<tr><td>Egzozdan alınan ısı Q̇<sub>giren</sub></td><td>4.725</td><td>kW</td></tr>
+<tr><td>— Bölge 1 (ön ısıtma): ısı / ΔT<sub>lm</sub> / alan</td><td>2.259,2 / 102,9 / 439</td><td>kW / K / m²</td></tr>
+<tr><td>— Bölge 2 (buharlaşma + kızdırma): ısı / ΔT<sub>lm</sub> / alan</td><td>2.465,8 / 144,8 / 341</td><td>kW / K / m²</td></tr>
+<tr><td>R245fa debisi</td><td>19,27</td><td>kg/s</td></tr>
+<tr><td>Türbin gücü / pompa gücü</td><td>610,8 / 32,6</td><td>kW</td></tr>
+<tr class="vurgu"><td>Net güç</td><td>578</td><td>kW</td></tr>
+<tr class="vurgu"><td>Isıl verim / ikinci yasa verimi</td><td>%12,2 / %30,5</td><td>—</td></tr>
+<tr class="vurgu"><td>Toplam ısı transfer alanı</td><td>780</td><td>m²</td></tr>
+<tr><td>Ana makineye göre ek güç</td><td>%4,1</td><td>—</td></tr>
+</table></div>
+<figure><img src="s2_sema.png" style="width:92%"><figcaption>Şekil 2. Tasarlanan ORC sisteminin şeması ve ana akış değerleri.</figcaption></figure>
+<figure><img src="s3_ts_tq.png" style="width:100%"><figcaption>Şekil 3. (a) R245fa çevriminin T–s diyagramı; (b) evaporatörde egzoz ve R245fa sıcaklık profilleri.</figcaption></figure>
+<p>Türbin çıkışı 73,9 °C'de kızgın buhardır. Bu ısının bir rejeneratörle pompa çıkışındaki sıvıya aktarılması, kondenser yükünü azaltır ve verimi artırır. Bu çözüm geliştirme önerisi olarak bırakılmıştır.</p>
+
+<h2>IV. Ters Basınç ve Literatürle Karşılaştırma</h2>
+<h3>A. Adım 5: Ters basınç</h3>
+<p>Evaporatör egzoz hattında bir akış direnci oluşturur. Artan ters basınç, motorun egzoz zamanındaki pompalama işini artırır ve ORC'den elde edilen kazancın bir kısmını geri alır [7]. Bu nedenle evaporatörün basınç kaybı, motor üreticisinin proje kılavuzunda verilen izin verilebilir egzoz karşı basıncı sınırıyla karşılaştırılmalıdır. Aynı ısı yükü için plaka-kanat tipi ısı değiştiriciler, gövde-boru tiplerine göre çok daha düşük basınç kaybı verir [15]. Bu çalışmada CFD analizi yapılmamıştır. Bir sonraki adımda kanatlı boru demeti CFD ile modellenmeli ve basınç kaybı doğrulanmalıdır. Egzoz ısı değiştiricilerinde SST k–ω ve RNG k–ε türbülans modellerinin deneyle uyumlu sonuç verdiği gösterilmiştir [16].</p>
+
+<h3>B. Literatürle karşılaştırma</h3>
+<div class="tblok"><div class="tb"><div class="no">TABLO V</div>LİTERATÜRDEKİ ATIK ISI GERİ KAZANIM ÇALIŞMALARIYLA KARŞILAŞTIRMA</div>
+<table>
+<tr><th>Çalışma</th><th>Sistem / motor</th><th>Güç</th><th>Verim</th><th>Diğer</th></tr>
+<tr><td>Yu vd. [17]</td><td>ORC R245fa, dizel motor (simülasyon)</td><td>≤ 14,5 kW</td><td>η<sub>gk</sub> ≤ %9,2; η<sub>ex</sub> ≤ %21,7</td><td>Motor ısıl verimi +%6,1</td></tr>
+<tr><td>Yağlı vd. [18]</td><td>ORC R245fa, biyogaz CHP motoru (simülasyon)</td><td>79,2 kW</td><td>η<sub>th</sub> %15,5; η<sub>ex</sub> %27,2</td><td>Kritik altı çevrim</td></tr>
+<tr><td>Park vd. [10]</td><td>Rankine (etanol), 10,8 L dizel (deney)</td><td>—</td><td>—</td><td>Yakıt tasarrufu %3–5</td></tr>
+<tr><td>Kim vd. [5]</td><td>TEG, 40 modül, 6 silindirli dizel (deney)</td><td>119 W</td><td>%2,8</td><td>Δp 0,45–1,46 kPa</td></tr>
+<tr><td>Pasini vd. [7]</td><td>Elektrik turbo-kompaund, 0,9 L benzinli (simülasyon)</td><td>—</td><td>—</td><td>BSFC ≤ %4; araç ≤ %2,7</td></tr>
+<tr class="vurgu"><td>Bu çalışma</td><td>ORC R245fa, 14 MW gemi motoru (1-B hesap)</td><td>578 kW</td><td>η<sub>th</sub> %12,2; η<sub>II</sub> %30,5</td><td>Ana makineye +%4,1</td></tr>
+</table></div>
+<p>Çalışmaların motor ölçeği ve yöntemi (deney veya simülasyon) farklıdır. Bu nedenle mutlak güç değerleri doğrudan karşılaştırılamaz; tablo verim ve kazanç mertebelerini göstermek içindir. Bu çalışmanın %12,2'lik ısıl verimi, R245fa ile yapılan çalışmalarla (%9–16) aynı aralıktadır. Bulunan değerler sürekli rejim ve ideal bileşen kabullerine dayanır. Isı kayıpları, kısmi yük çalışması ve ters basınç cezası eklendiğinde gerçek kazanç daha düşük olacaktır [11].</p>
+
+<h2>V. Sonuç</h2>
+<ul>
+<li>14 MW'lık gemi dizel motorunun egzozundan (320 → 140 °C) 4.725 kW ısı geri kazanılarak R245fa ORC ile 578 kW net güç elde edilmektedir. Bu, ana makine gücüne göre yaklaşık %4,1 ek güçtür.</li>
+<li>Çevrimin ısıl verimi %12,2, egzozdan alınan ekserjiye göre ikinci yasa verimi %30,5'tir.</li>
+<li>İki bölgeli LMTD yöntemiyle gerekli efektif ısı transfer alanı yaklaşık 780 m² bulunmuştur (U = 50 W/m²·K).</li>
+<li>TEG düşük verimi (%3 mertebesi), turbo-kompaund ise ters basınca duyarlılığı nedeniyle bu ölçekte ORC'nin gerisinde kalmaktadır.</li>
+<li>Önerilen sonraki adımlar: (i) evaporatör basınç kaybının CFD ile doğrulanması, (ii) türbin çıkışındaki 73,9 °C'lik ısının rejeneratörle değerlendirilmesi, (iii) gömlek suyu ısısının ön ısıtmada kullanılması, (iv) kısmi yük performansının incelenmesi.</li>
+</ul>
+
+<h2>Kaynakça</h2>
+<div class="kay">
+<p>[1] R. Saidur, M. Rezaei, W. K. Muzammil, M. H. Hassan, S. Paria, and M. Hasanuzzaman, "Technologies to recover exhaust heat from internal combustion engines," <i>Renewable and Sustainable Energy Reviews</i>, vol. 16, no. 8, pp. 5649–5659, 2012, doi: 10.1016/j.rser.2012.05.018.</p>
+<p>[2] S. Lion, C. N. Michos, I. Vlaskos, C. Rouaud, and R. Taccani, "A review of waste heat recovery and Organic Rankine Cycles (ORC) in on-off highway vehicle Heavy Duty Diesel Engine applications," <i>Renewable and Sustainable Energy Reviews</i>, vol. 79, pp. 691–708, 2017, doi: 10.1016/j.rser.2017.05.082.</p>
+<p>[3] G. Shu, Y. Liang, H. Wei, H. Tian, J. Zhao, and L. Liu, "A review of waste heat recovery on two-stroke IC engine aboard ships," <i>Renewable and Sustainable Energy Reviews</i>, vol. 19, pp. 385–401, 2013, doi: 10.1016/j.rser.2012.11.034.</p>
+<p>[4] D. Champier, "Thermoelectric generators: A review of applications," <i>Energy Conversion and Management</i>, vol. 140, pp. 167–181, 2017, doi: 10.1016/j.enconman.2017.02.070.</p>
+<p>[5] T. Y. Kim, A. A. Negash, and G. Cho, "Waste heat recovery of a diesel engine using a thermoelectric generator equipped with customized thermoelectric modules," <i>Energy Conversion and Management</i>, vol. 124, pp. 280–286, 2016, doi: 10.1016/j.enconman.2016.07.013.</p>
+<p>[6] H. Aghaali and H.-E. Ångström, "A review of turbocompounding as a waste heat recovery system for internal combustion engines," <i>Renewable and Sustainable Energy Reviews</i>, vol. 49, pp. 813–824, 2015, doi: 10.1016/j.rser.2015.04.144.</p>
+<p>[7] G. Pasini, G. Lutzemberger, S. Frigo, S. Marelli, M. Ceraolo, R. Gentili, and M. Capobianco, "Evaluation of an electric turbo compound system for SI engines: A numerical approach," <i>Applied Energy</i>, vol. 162, pp. 527–540, 2016, doi: 10.1016/j.apenergy.2015.10.143.</p>
+<p>[8] C. Sprouse III and C. Depcik, "Review of organic Rankine cycles for internal combustion engine exhaust waste heat recovery," <i>Applied Thermal Engineering</i>, vol. 51, no. 1–2, pp. 711–722, 2013, doi: 10.1016/j.applthermaleng.2012.10.017.</p>
+<p>[9] S. Quoilin, M. Van Den Broek, S. Declaye, P. Dewallef, and V. Lemort, "Techno-economic survey of Organic Rankine Cycle (ORC) systems," <i>Renewable and Sustainable Energy Reviews</i>, vol. 22, pp. 168–186, 2013, doi: 10.1016/j.rser.2013.01.028.</p>
+<p>[10] T. Park, H. Teng, G. L. Hunter, B. van der Velde, and J. Klaver, "A Rankine cycle system for recovering waste heat from HD diesel engines – experimental results," SAE Technical Paper 2011-01-1337, 2011, doi: 10.4271/2011-01-1337.</p>
+<p>[11] B. Xu, D. Rathod, A. Yebi, Z. Filipi, S. Onori, and M. Hoffman, "A comprehensive review of organic Rankine cycle waste heat recovery systems in heavy-duty diesel engine applications," <i>Renewable and Sustainable Energy Reviews</i>, vol. 107, pp. 145–170, 2019, doi: 10.1016/j.rser.2019.03.012.</p>
+<p>[12] E. H. Wang, H. G. Zhang, B. Y. Fan, M. G. Ouyang, Y. Zhao, and Q. H. Mu, "Study of working fluid selection of organic Rankine cycle (ORC) for engine waste heat recovery," <i>Energy</i>, vol. 36, no. 5, pp. 3406–3418, 2011, doi: 10.1016/j.energy.2011.03.041.</p>
+<p>[13] I. H. Bell, J. Wronski, S. Quoilin, and V. Lemort, "Pure and pseudo-pure fluid thermophysical property evaluation and the open-source thermophysical property library CoolProp," <i>Industrial &amp; Engineering Chemistry Research</i>, vol. 53, no. 6, pp. 2498–2508, 2014, doi: 10.1021/ie4033999.</p>
+<p>[14] T. L. Bergman, A. S. Lavine, F. P. Incropera, and D. P. DeWitt, <i>Fundamentals of Heat and Mass Transfer</i>, 7th ed. Hoboken, NJ, USA: Wiley, 2011.</p>
+<p>[15] S. Mavridou, G. C. Mavropoulos, D. Bouris, D. T. Hountalas, and G. Bergeles, "Comparative design study of a diesel exhaust gas heat exchanger for truck applications with conventional and state of the art heat transfer enhancements," <i>Applied Thermal Engineering</i>, vol. 30, no. 8–9, pp. 935–947, 2010, doi: 10.1016/j.applthermaleng.2010.01.003.</p>
+<p>[16] M. Hatami, D. D. Ganji, and M. Gorji-Bandpy, "Numerical study of finned type heat exchangers for ICEs exhaust waste heat recovery," <i>Case Studies in Thermal Engineering</i>, vol. 4, pp. 53–64, 2014, doi: 10.1016/j.csite.2014.07.002.</p>
+<p>[17] G. Yu, G. Shu, H. Tian, H. Wei, and L. Liu, "Simulation and thermodynamic analysis of a bottoming Organic Rankine Cycle (ORC) of diesel engine (DE)," <i>Energy</i>, vol. 51, pp. 281–290, 2013, doi: 10.1016/j.energy.2012.10.054.</p>
+<p>[18] H. Yağlı, Y. Koç, A. Koç, A. Görgülü, and A. Tandiroğlu, "Parametric optimization and exergetic analysis comparison of subcritical and supercritical organic Rankine cycle (ORC) for biogas fuelled combined heat and power (CHP) engine exhaust gas waste heat," <i>Energy</i>, vol. 111, pp. 923–932, 2016, doi: 10.1016/j.energy.2016.05.119.</p>
+</div>
+</body></html>
