@@ -5,6 +5,7 @@
 | Dosya | İçerik |
 |---|---|
 | `RAPOR.md` | Ana rapor (Özet, Giriş, Literatür, Tasarım ve Metodoloji, Sonuçlar ve Tartışma, Sonuç, IEEE Kaynakça, Ekler) |
+| `RAPOR_ORC_Tasarim.pdf` | Sade sürüm: 14 MW gemi dizel motoru için R245fa ORC tasarım raporu (6 sayfa). Kaynağı `sade_rapor/` (`python3 sade_rapor/olustur.py`) |
 | `RAPOR.pdf` | Raporun IEEE benzeri düzende dizilmiş PDF sürümü (kapak, içindekiler, numaralı denklemler) |
 | `RAPOR.docx` | Raporun Word sürümü (`pandoc` ile üretilmiştir) |
 | `sekiller/` | 12 şekil: literatür tablolarından yeniden çizilmiş grafikler ve bu çalışmanın hesaplarına ait grafikler |
