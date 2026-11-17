@@ -1,0 +1,238 @@
+# EH laboratuvarı – eğitim verisi kaynak listesi
+# Her [[depo]] belirtilen sürüm etiketinden (ref) indirilir.
+# ref = "HEAD" olanların sürüm etiketi yok; o anki commit kaydedilir.
+# dahil: hangi klasör/dosyalar alınacak (glob). Belge, örnek, test ve API kaynağı hedeflenir.
+# lisans: deponun bildirdiği lisans. "NC" = ticari olmayan kullanım şartı var.
+# kategori: sdr | dsp | ml | gnss | radar | df | olcum | em | fpga | standart
+
+[[depo]]
+ad = "gnuradio"
+url = "https://github.com/gnuradio/gnuradio.git"
+ref = "v3.10.12.0"
+lisans = "GPL-3.0"
+kategori = "sdr"
+dahil = ["gr-*/examples/**", "gr-*/python/**/qa_*.py", "docs/**", "gr-utils/modtool/templates/**", "README.md"]
+
+[[depo]]
+ad = "uhd"
+url = "https://github.com/EttusResearch/uhd.git"
+ref = "v4.11.0.0"
+lisans = "GPL-3.0 (bazı bileşenler farklı; depo LICENSE dosyasına bakın)"
+kategori = "sdr"
+dahil = ["host/examples/**", "host/docs/**", "host/python/uhd/**", "README.md"]
+
+[[depo]]
+ad = "libiio"
+url = "https://github.com/analogdevicesinc/libiio.git"
+ref = "v0.26"
+lisans = "LGPL-2.1"
+kategori = "sdr"
+dahil = ["examples/**", "bindings/python/**", "README.md", "doc/**"]
+
+[[depo]]
+ad = "pyadi-iio"
+url = "https://github.com/analogdevicesinc/pyadi-iio.git"
+ref = "v0.0.21"
+lisans = "ADI BSD benzeri (depo LICENSE dosyasına bakın)"
+kategori = "sdr"
+dahil = ["examples/**", "doc/**", "adi/*.py", "README.md"]
+
+[[depo]]
+ad = "SoapySDR"
+url = "https://github.com/pothosware/SoapySDR.git"
+ref = "soapy-sdr-0.8.1"
+lisans = "BSL-1.0"
+kategori = "sdr"
+dahil = ["include/SoapySDR/*.h", "include/SoapySDR/*.hpp", "python/**", "apps/**", "README.md"]
+
+[[depo]]
+ad = "gr-osmosdr"
+url = "https://github.com/osmocom/gr-osmosdr.git"
+ref = "v0.2.6"
+lisans = "GPL-3.0"
+kategori = "sdr"
+dahil = ["apps/**", "grc/**", "README*"]
+
+[[depo]]
+ad = "hackrf"
+url = "https://github.com/greatscottgadgets/hackrf.git"
+ref = "v2026.01.3"
+lisans = "GPL-2.0"
+kategori = "sdr"
+dahil = ["host/hackrf-tools/src/**", "docs/**", "README.md"]
+
+[[depo]]
+ad = "liquid-dsp"
+url = "https://github.com/jgaeddert/liquid-dsp.git"
+ref = "v1.8.3"
+lisans = "MIT"
+kategori = "dsp"
+dahil = ["examples/**", "doc/**", "include/liquid.h", "README.md"]
+
+[[depo]]
+ad = "gnss-sdr"
+url = "https://github.com/gnss-sdr/gnss-sdr.git"
+ref = "v0.0.22"
+lisans = "GPL-3.0"
+kategori = "gnss"
+dahil = ["conf/**", "docs/**", "README.md"]
+
+[[depo]]
+ad = "torchsig"
+url = "https://github.com/TorchDSP/torchsig.git"
+ref = "v2.2.0"
+lisans = "MIT"
+kategori = "ml"
+dahil = ["examples/**", "docs/**", "torchsig/**/*.py", "README.md"]
+
+[[depo]]
+ad = "sigmf-python"
+url = "https://github.com/sigmf/sigmf-python.git"
+ref = "v1.14.0"
+lisans = "LGPL-3.0"
+kategori = "standart"
+dahil = ["sigmf/**", "docs/**", "tests/**", "README.md"]
+
+[[depo]]
+ad = "scikit-rf"
+url = "https://github.com/scikit-rf/scikit-rf.git"
+ref = "v2.2.0"
+lisans = "BSD-3-Clause"
+kategori = "olcum"
+dahil = ["doc/source/examples/**", "doc/source/tutorials/**", "README.md"]
+
+[[depo]]
+ad = "RsInstrument"
+url = "https://github.com/Rohde-Schwarz/RsInstrument.git"
+ref = "HEAD"
+lisans = "MIT"
+kategori = "olcum"
+dahil = ["**/*.py", "**/*.md"]
+
+[[depo]]
+ad = "openEMS"
+url = "https://github.com/thliebig/openEMS.git"
+ref = "v0.37.0"
+lisans = "GPL-3.0"
+kategori = "em"
+dahil = ["**/Tutorials/**", "README*"]
+
+[[depo]]
+ad = "meep"
+url = "https://github.com/NanoComp/meep.git"
+ref = "v1.35.1"
+lisans = "GPL-2.0"
+kategori = "em"
+dahil = ["python/examples/**", "doc/docs/**", "README.md"]
+
+[[depo]]
+ad = "RFSoC-PYNQ"
+url = "https://github.com/Xilinx/RFSoC-PYNQ.git"
+ref = "v4.0.0"
+lisans = "BSD-3-Clause"
+kategori = "fpga"
+dahil = ["boards/**/notebooks/**", "**/*.md"]
+
+[[depo]]
+ad = "RFSoC-Book"
+url = "https://github.com/strath-sdr/RFSoC-Book.git"
+ref = "HEAD"
+lisans = "BSD-3-Clause"
+kategori = "fpga"
+dahil = ["**/*.ipynb", "**/*.md"]
+
+[[depo]]
+ad = "PySDR"
+url = "https://github.com/777arc/PySDR.git"
+ref = "HEAD"
+lisans = "CC BY-NC-SA 4.0 (NC: ticari olmayan kullanım)"
+kategori = "dsp"
+dahil = ["content/**", "README.md"]
+
+[[depo]]
+ad = "krakensdr_doa"
+url = "https://github.com/krakenrf/krakensdr_doa.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "df"
+dahil = ["**/*.py", "README.md"]
+
+[[depo]]
+ad = "pyArgus"
+url = "https://github.com/petotamas/pyArgus.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "df"
+dahil = ["**/*.py", "**/*.ipynb", "README*"]
+
+[[depo]]
+ad = "emitter-detection-python"
+url = "https://github.com/nodonoughue/emitter-detection-python.git"
+ref = "HEAD"
+lisans = "MIT"
+kategori = "df"
+dahil = ["**/*.py", "**/*.ipynb", "README.md"]
+
+[[depo]]
+ad = "radarsimpy"
+url = "https://github.com/radarsimx/radarsimpy.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "radar"
+dahil = ["**/*.md", "**/*.ipynb", "src/radarsimpy/**/*.py"]
+
+[[depo]]
+ad = "RadarBook"
+url = "https://github.com/RadarBook/software.git"
+ref = "HEAD"
+lisans = "belirtilmemiş (kullanmadan önce kontrol edin)"
+kategori = "radar"
+dahil = ["**/*.py", "**/*.ipynb", "**/*.md"]
+
+[[depo]]
+ad = "mit-ll-radar-intro"
+url = "https://github.com/mit-ll/radar-intro.git"
+ref = "HEAD"
+lisans = "depo LICENSE dosyasına bakın (Distribution A)"
+kategori = "radar"
+dahil = ["**/*.ipynb", "**/*.md", "**/*.py"]
+
+[[depo]]
+ad = "gr-inspector"
+url = "https://github.com/gnuradio/gr-inspector.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "sdr"
+dahil = ["examples/**", "python/**", "docs/**", "README.md"]
+
+[[depo]]
+ad = "gr-radar"
+url = "https://github.com/kit-cel/gr-radar.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "radar"
+dahil = ["examples/**", "python/**", "docs/**", "README*"]
+
+[[depo]]
+ad = "gr-difi"
+url = "https://github.com/DIFI-Consortium/gr-difi.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "standart"
+dahil = ["examples/**", "python/**", "README.md"]
+
+[[depo]]
+ad = "gr-fhss_utils"
+url = "https://github.com/sandialabs/gr-fhss_utils.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "sdr"
+dahil = ["examples/**", "python/**", "README.md"]
+
+[[depo]]
+ad = "turing-deinterleaving-challenge"
+url = "https://github.com/alan-turing-institute/turing-deinterleaving-challenge.git"
+ref = "HEAD"
+lisans = "depo LICENSE dosyasına bakın"
+kategori = "ml"
+dahil = ["**/*.py", "**/*.ipynb", "**/*.md"]
