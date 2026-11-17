@@ -294,3 +294,61 @@ ref = "HEAD"
 lisans = "BSD-3-Clause"
 kategori = "ml"
 dahil = ["**/*.py", "**/*.ipynb", "**/*.md"]
+
+# --- 17.11.2026: kodlama araştırması sonrası eklenenler (laboratuvar donanımı) ---
+
+[[depo]]
+ad = "bladeRF"
+url = "https://github.com/Nuand/bladeRF.git"
+ref = "2024.05"
+lisans = "karma: libbladeRF LGPL-2.1, HDL/FX3 MIT, araçlar GPL (COPYING)"
+kategori = "sdr"
+dahil = ["host/examples/**", "host/libraries/libbladeRF/doc/**", "host/libraries/libbladeRF/include/*.h", "host/libraries/libbladeRF_bindings/python/**", "README.md"]
+
+[[depo]]
+ad = "heimdall_daq_fw"
+url = "https://github.com/krakenrf/heimdall_daq_fw.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "df"
+dahil = ["README.md", "Firmware/_daq_core/*.py", "Firmware/_testing/**", "Firmware/_calibration/**", "config_files/**", "util/*.sh", "util/*.py"]
+
+[[depo]]
+ad = "Rohde-Schwarz-Examples"
+url = "https://github.com/Rohde-Schwarz/Examples.git"
+ref = "HEAD"
+lisans = "MIT"
+kategori = "olcum"
+dahil = ["**/Python/**", "README.md"]
+
+[[depo]]
+ad = "pyvisa"
+url = "https://github.com/pyvisa/pyvisa.git"
+ref = "1.16.2"
+lisans = "MIT"
+kategori = "olcum"
+dahil = ["docs/source/**", "README.rst"]
+
+[[depo]]
+ad = "pyvisa-sim"
+url = "https://github.com/pyvisa/pyvisa-sim.git"
+ref = "0.7.1"
+lisans = "MIT"
+kategori = "olcum"
+dahil = ["docs/**", "pyvisa_sim/default.yaml", "pyvisa_sim/testsuite/**", "README.rst"]
+
+[[depo]]
+ad = "pyminicircuits"
+url = "https://github.com/storborg/pyminicircuits.git"
+ref = "HEAD"
+lisans = "MIT"
+kategori = "olcum"
+dahil = ["pyminicircuits/**", "README.md"]
+
+[[depo]]
+ad = "python-necpp"
+url = "https://github.com/tmolteno/python-necpp.git"
+ref = "v2.4.0"
+lisans = "GPL-2.0 (PyPI PyNEC: GPL-3.0-only)"
+kategori = "em"
+dahil = ["PyNEC/example/**", "PyNEC/tests/**", "necpp/example/**", "README.md", "necpp/README.md"]
