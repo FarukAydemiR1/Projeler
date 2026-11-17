@@ -3,7 +3,7 @@
 # ref = "HEAD" olanların sürüm etiketi yok; o anki commit kaydedilir.
 # dahil: hangi klasör/dosyalar alınacak (glob). Belge, örnek, test ve API kaynağı hedeflenir.
 # lisans: deponun bildirdiği lisans. "NC" = ticari olmayan kullanım şartı var.
-# kategori: sdr | dsp | ml | gnss | radar | df | olcum | em | fpga | standart
+# kategori: sdr | dsp | ml | gnss | radar | df | olcum | em | fpga | standart | yayilim
 
 [[depo]]
 ad = "gnuradio"
@@ -234,5 +234,63 @@ ad = "turing-deinterleaving-challenge"
 url = "https://github.com/alan-turing-institute/turing-deinterleaving-challenge.git"
 ref = "HEAD"
 lisans = "depo LICENSE dosyasına bakın"
+kategori = "ml"
+dahil = ["**/*.py", "**/*.ipynb", "**/*.md"]
+
+# --- Prompt 1 eklemeleri (17.11.2026): yayılım, darbe ayrıştırma, SEI ---
+
+[[depo]]
+ad = "ITU-Rpy"
+url = "https://github.com/inigodelportillo/ITU-Rpy.git"
+ref = "HEAD"
+lisans = "MIT"
+kategori = "yayilim"
+dahil = ["itur/**/*.py", "docs/**", "examples/**", "README*"]
+
+[[depo]]
+ad = "p452"
+url = "https://github.com/eeveetza/p452.git"
+ref = "HEAD"
+lisans = "depo LICENSE dosyasına bakın"
+kategori = "yayilim"
+dahil = ["**/*.m", "**/*.md"]
+
+[[depo]]
+ad = "p1546"
+url = "https://github.com/eeveetza/p1546.git"
+ref = "HEAD"
+lisans = "depo LICENSE dosyasına bakın"
+kategori = "yayilim"
+dahil = ["**/*.m", "**/*.md"]
+
+[[depo]]
+ad = "RadSeg"
+url = "https://github.com/abcxyzi/RadSeg.git"
+ref = "HEAD"
+lisans = "belirtilmemiş (kullanmadan önce kontrol edin)"
+kategori = "ml"
+dahil = ["**/*.py", "**/*.ipynb", "**/*.md"]
+
+[[depo]]
+ad = "RadCharSSL"
+url = "https://github.com/abcxyzi/RadCharSSL.git"
+ref = "HEAD"
+lisans = "belirtilmemiş (kullanmadan önce kontrol edin)"
+kategori = "ml"
+dahil = ["**/*.py", "**/*.ipynb", "**/*.md"]
+
+[[depo]]
+ad = "LoRa_RFFI"
+url = "https://github.com/gxhen/LoRa_RFFI.git"
+ref = "HEAD"
+lisans = "belirtilmemiş (kullanmadan önce kontrol edin)"
+kategori = "ml"
+dahil = ["**/*.py", "**/*.ipynb", "**/*.md"]
+
+[[depo]]
+ad = "wisig-examples"
+url = "https://github.com/WiSig-dataset/wisig-examples.git"
+ref = "HEAD"
+lisans = "BSD-3-Clause"
 kategori = "ml"
 dahil = ["**/*.py", "**/*.ipynb", "**/*.md"]
