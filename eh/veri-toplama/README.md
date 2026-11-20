@@ -7,11 +7,12 @@ Amaç: Yerel yapay zekâ modeline **hangi programı kullanacağını, nasıl kur
 | Dosya | Ne işe yarar |
 |---|---|
 | `surumler.toml` | Laboratuvarın **sabit yazılım sürüm seti**. Model yalnızca bu sürümlerin belgesini ve kodunu öğrenir. |
-| `kaynaklar.toml` | İndirilecek 47 açık kaynak depo: hangi sürüm etiketi, hangi klasörler, lisans ve kategori. |
+| `kaynaklar.toml` | İndirilecek 51 açık kaynak depo: hangi sürüm etiketi, hangi klasörler, lisans ve kategori. |
 | `elle-indirilecekler.md` | Git ile indirilemeyen PDF ve web belgeleri: ölçüm cihazlarının SCPI kılavuzları, RAG ve Türkçe terim kaynakları. |
 | `topla.py` | Toplama betiği. Depoları indirir, belge/örnek/test/not defteri dosyalarını seçer, her dosyayı sürüm etiketli bir JSONL kaydına çevirir. |
 | `laboratuvar-yapilacaklar.md` | Yalnızca laboratuvarda üretilebilecek veriler: kalibrasyon, kablo kayıp tabloları, PDW ve darbe ayrıştırma örnekleri, terim listesi. |
 | `eksikler-promptu.md` | Kalan internet kaynaklı eksikler ve bunları bulmak için araştırma promptu. |
+| `ince-ayar-notlari.md` | Ekran kartı gelince kullanılacak ince ayar araçları, başlangıç ayarları ve adımlar. |
 | `lab-ornek-sablonu.md` | Laboratuvarda çalıştırıp doğruladığınız örneklerin yazılacağı şablon. **En değerli veri bunlar.** |
 
 ## Neden sürüm sabitleme?

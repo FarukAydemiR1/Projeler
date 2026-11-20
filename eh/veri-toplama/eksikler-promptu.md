@@ -81,6 +81,23 @@ Bilgi bankası Open WebUI + llama.cpp üzerinde çalışacak. Aşağıdaki 12 ba
 KURALLAR: Kaynak uydurma. Her link, belgenin kendisine gitsin (ana sayfa değil). Doğrulayamadığın her şeye "DOĞRULANAMADI" yaz. Her satıra lisans ekle. Karıştırıcı yapımına yönelik içerik verme. Verici içeren örneklerde yalnızca kablolu, zayıflatıcılı veya dummy load'lu düzenekleri kabul et. Arşivlenmiş ya da 3 yıldan uzun süredir güncellenmeyen depoları "ESKİ" diye işaretle.
 ```
 
+## Prompt 2 sonucu (21.11.2026)
+
+| # | Konu | Durum |
+|---|---|---|
+| 1 | CFAR / darbe ders materyali | Kısmen. OpenRadar ve pyCFAR-lib toplamaya eklendi; MathWorks örneği ve Mahafza kitabı elle. Saf numpy CDIF/SDIF defteri yok → laboratuvar görevi 10 |
+| 2 | GNSS-SDR kayıtlı veri | Kapandı. gnss-sdr.org'un kaynağı (`gnss-sdr-site`, CC-BY-4.0) toplanıyor. TEXBAT için hazır conf yok, laboratuvarda yazılacak. Aldatma için resmi mekanizma yalnızca OSNMA |
+| 3 | TorchSig / UHD geçişi | Büyük ölçüde. TorchSig eski→yeni eşlemesi GRCon 2025 makalesinde; geçiş rehberinin dosyası bulunamadı. UHD 4.11 Python API sayfası doğrulandı |
+| 4 | GNU Radio wiki çevrimdışı | Açık. Cloudflare engeli; sayfalar tarayıcıdan alınacak |
+| 5 | Çevrimdışı kurulum | Kısmen. Open WebUI offline modu doğrulandı; geri kalanı sunucu kurulumunda belgelenecek |
+| 6 | İnce ayar | Kapandı. `ince-ayar-notlari.md` yazıldı |
+| 7 | Donanımsız test | Kapandı. pytest-libiio + iio-emu (pyadi-iio), PyVISA-sim, gr_unittest. UHD için mock yok; ince bir arayüz yazılacak |
+| 8 | Türkçe terimler | Açık. Hiçbir kaynak doğrulanamadı → ekip kendi listesini tutacak |
+| 9 | Open WebUI lisansı | Kapandı. LICENSE 4. madde doğrudan okundu: markayı korursanız kısıt yok; ≤50 kullanıcıda marka da değiştirilebilir. Alternatifler: AnythingLLM (MIT), LobeChat (LobeHub Community License, izin verici değil) |
+| 10 | Alıcı tarafı veri setleri | Kısmen. RadioML CC BY-NC-SA (NC). Diğerleri doğrulanamadı |
+
+Raporda **uydurma bir depo** (MelihAliCagman/cfar-radar-pipeline) ve iki bozuk link vardı.
+
 ## Prompt 2 (20.11.2026): kalan açıklar
 
 ```

@@ -103,6 +103,24 @@ Wiki Cloudflare korumasının arkasında, betikle indirilemiyor. Tarayıcıdan a
 | Kurulum (v15.5.0) | https://radarsimx.github.io/radarsimpy/user_guide/installation.html | pip yok; derlenmiş modül klasörü kopyalanır. Lisans dosyası yoksa "free tier": hedef karmaşıklığı ve kanal sayısı sınırlı |
 | Ürün sayfası | https://radarsimx.com/radarsimx/radarsimpy/ | Python 3.10–3.14, NumPy ≥ 2.0, Ubuntu 26.04 modülü var |
 
+## İkinci araştırmadan gelenler (21.11.2026)
+
+| Belge | Link | Durum / not |
+|---|---|---|
+| MathWorks: CFAR Detection örneği (CA-CFAR, 2-D) | https://www.mathworks.com/help/phased/ug/constant-false-alarm-rate-cfar-detection.html | Buradan 403 (bot engeli); tarayıcıdan alın. Kodu çalıştırmak için MATLAB + Phased Array Toolbox gerekir |
+| Mahafza, Radar Systems Analysis and Design Using MATLAB, 4. baskı | https://www.routledge.com/Radar-Systems-Analysis-and-Design-Using-MATLAB/Mahafza/p/book/9780367507930 | Çalışıyor. Kod "kitabın web sayfasından" iniyor; kod lisansı kitaptaki feragatnamede |
+| PDW + PRI ayrıştırma makalesi (EURASIP JWCN 2021, açık erişim) | https://jwcn-eurasipjournals.springeropen.com/articles/10.1186/s13638-021-01985-5 | Çalışıyor. CDIF/SDIF algoritması anlatılıyor, kod yok |
+| UHD 4.11 Python API | https://files.ettus.com/manual/page_python.html | Çalışıyor. `uhd.usrp.MultiUSRP`, `recv_num_samps` |
+| Ettus MultiUSRP atölyesi (GRCon 2025) | https://events.gnuradio.org/event/26/contributions/778/attachments/248/648/MultiUSRP%20Workshop.pdf | Çalışıyor |
+| TorchSig 2.0 GRCon 2025 sunumu (örnek dosya yolları) | https://events.gnuradio.org/event/26/contributions/752/attachments/220/588/TorchSig_GRCon2025_talk.pdf | Çalışıyor. Eski→yeni API eşlemesi için makale yukarıda |
+| pyadi-iio geliştirici belgesi (iio-emu ile test) | https://analogdevicesinc.github.io/pyadi-iio/dev/index.html | Çalışıyor (`pyadi-iio` deposunun `doc/` klasöründe de toplanıyor) |
+| pytest-libiio emülasyon | https://pytest-libiio.readthedocs.io/en/latest/emulation/ | Çalışıyor (depo olarak da toplanıyor) |
+| PyVISA-sim cihaz tanımı (YAML) | https://pyvisa.readthedocs.io/projects/pyvisa-sim/en/latest/definitions.html | Çalışıyor (depo olarak da toplanıyor) |
+| Open WebUI çevrimdışı mod | https://docs.openwebui.com/tutorials/maintenance/offline-mode/ | Çalışıyor. `OFFLINE_MODE=true`; embedding modeli önceden önbelleğe alınmalı |
+| DeepSig RadioML 2016/2018 | https://www.deepsig.ai/datasets/ | Çalışıyor. **CC BY-NC-SA 4.0 (ticari olmayan)**; 2018.01A ~19,3 GB. Veriyi RAG'e koymayın |
+
+İnce ayar belgeleri `ince-ayar-notlari.md` dosyasında.
+
 ## Bilerek eklenmeyenler
 
 | Depo | Neden |
@@ -116,3 +134,7 @@ Wiki Cloudflare korumasının arkasında, betikle indirilemiyor. Tarayıcıdan a
 | asrdefence-len/ES-Deinterleaver, RicardoSky/signalsort, xm980426/HMC-RFN, jeongyoonwoo/rtl-pdw, abcxyzi/RadChar (kod) | Lisans dosyası yok; yalnızca okunabilir, kopyalanamaz. signalsort 2017'den beri güncellenmiyor (ESKİ) |
 | hugodrak/deinterleaving_ew_signal_intelligence, SDRSentinel, alberto-hdz/esm-deinterleaver | Şablon veya yapay zekâ üretimi izlenimi veriyor, yıldızı çok az; doğru örnek diye öğretilmemeli |
 | harshadms/semperfi, Arturvpf/gps-spoofing-detection-texbat | Lisans yok; semperfi 2022'den beri güncellenmiyor |
+| MelihAliCagman/cfar-radar-pipeline | **Uydurma:** böyle bir depo yok (araştırma raporunda geçiyordu) |
+| phasedn.com/radarbookcode, torchsig.readthedocs.io | Raporda verilen linkler 404 veriyor |
+| seki5405/gnss_spoof_detector, oscimp/gnss-sdr-1pps | Lisans yok. oscimp'in testi havadan yayın yapan bir verici kullanıyor; kullanılmaz |
+| CetaceanDemons/gnss-spoofing-alarm-calibration | MIT ama 0 yıldızlı, çok yeni ve tek yazarlı; `texbat_base.conf` yalnızca fikir için okunabilir |

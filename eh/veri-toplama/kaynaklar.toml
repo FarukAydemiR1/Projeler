@@ -387,3 +387,37 @@ ref = "HEAD"
 lisans = "Apache-2.0"
 kategori = "df"
 dahil = ["src/**", "tests/*.py", "README.md"]
+
+# --- 21.11.2026: ikinci eksikler araştırması sonrası eklenenler ---
+
+[[depo]]
+ad = "gnss-sdr-site"
+url = "https://github.com/gnss-sdr/geniuss-place.git"
+ref = "HEAD"
+lisans = "CC-BY-4.0 (gnss-sdr.org sitesinin kaynağı)"
+kategori = "gnss"
+dahil = ["_quick-start/*.md", "_sp-blocks/*.md", "_docs/*.md", "_posts/*.md", "_pages/*.md"]   # my-first-fix, Signal Source (ishort/25 Msps), global parametreler (OSNMA)
+
+[[depo]]
+ad = "OpenRadar"
+url = "https://github.com/PreSenseRadar/OpenRadar.git"
+ref = "HEAD"
+lisans = "Apache-2.0"
+kategori = "radar"
+dahil = ["mmwave/dsp/**", "Presense Applied Radar/**", "docs/source/**", "README.md"]   # CA/CAGO/CASO/OS-CFAR numpy (son güncelleme 2024)
+
+[[depo]]
+ad = "pyCFAR-lib"
+url = "https://github.com/dayalannair/pyCFAR-lib.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "radar"
+dahil = ["*.py", "MATLAB/**/*.m", "README.md"]   # OS/SOCA-CFAR; 2023'ten beri güncellenmiyor
+
+[[depo]]
+ad = "pytest-libiio"
+url = "https://github.com/tfcollins/pytest-libiio.git"
+ref = "HEAD"
+lisans = "BSD-3-Clause"
+kategori = "sdr"
+dahil = ["docs/**", "tests/*.py", "README.md"]   # iio-emu ile donanımsız pyadi-iio testi
