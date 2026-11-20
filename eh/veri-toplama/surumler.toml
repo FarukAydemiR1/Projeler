@@ -1,0 +1,53 @@
+# EH laboratuvarı – sabit yazılım sürüm seti (ÖNERİ)
+# Kontrol tarihi: 17.11.2026 (PyPI, GitHub sürüm etiketleri, packages.ubuntu.com/resolute)
+# Kurulum sütunu: "apt" = Ubuntu 26.04 deposundaki sürüm setle aynı; "kaynak" = depo eski, kaynaktan derleyin
+# Kural: Model yalnızca BU sürümlerin belge ve kodunu öğrenir.
+# Bir sürüm değişirse burayı güncelleyin ve toplama betiğini yeniden çalıştırın.
+# "dogrula" yazan satırlar laboratuvarda gerçek donanımla denenmeden kesinleşmiş sayılmaz.
+
+[kimlik]
+etiket = "eh-lab-2026-11"   # sürüm seti değişince bu etiketi de değiştirin
+
+[platform]
+isletim_sistemi = "Ubuntu 26.04 LTS"
+python = "3.12+ (Ubuntu 26.04'ün sistem Python'u)"
+
+[sdr]
+gnuradio    = "3.10.12.0"   # apt (3.10.12.0-6). GNU Radio 4.0 hâlâ RC3, kararlı değil
+uhd         = "4.11.0.0"    # kaynak: apt 4.9.0.1 verir. UHD ile gr-uhd aynı kaynaktan derlenmeli
+libiio      = "0.26"        # apt (0.26-2build2). pyadi-iio belgesi kararlı çalışma için v0.x öneriyor; `pip install iio` YAPMAYIN
+                            # libiio v1.0.0 21.09.2026'da çıktı (yeni API). README: v0.x programları v1.0 üzerinde uyumluluk katmanıyla çalışır.
+                            # Model 0.26 API'siyle kod yazar; v1 API'si yalnızca libiio_0_to_1 rehberinden "yeni API" etiketiyle öğrenilir.
+pyadi_iio   = "0.0.21"
+soapysdr    = "0.8.1"       # apt (0.8.1-7build1). 0.9.0 var ama Ubuntu ve gr-osmosdr 0.8 ABI'sinde
+gr_osmosdr  = "0.2.6"       # apt (0.2.6-6)
+hackrf      = "2026.01.3"   # apt (2026.01.3-1). Cihaz firmware'i de aynı sürüme güncellenmeli
+liquid_dsp  = "1.8.3"       # kaynak: apt 1.7.0 verir
+gnss_sdr    = "0.0.22"      # kaynak: apt 0.0.20 verir. 0.0.22'de tests/ ve utils/ köke taşındı
+bladerf     = "2024.05"     # apt (bladerf 0.2024.05-1build1, python3-bladerf)
+
+[python]
+numpy       = "2.5.5"
+scipy       = "1.18.1"
+matplotlib  = "3.11.2"
+torch       = "2.15.0"      # CPU sürümü yeterli; ekran kartı gelince CUDA sürümü
+torchsig    = "2.2.0"
+sigmf       = "1.14.0"      # PyPI sürümü; depoda v1.15.0 etiketi var ama PyPI'a çıkmadı
+scikit_rf   = "2.2.0"
+pyvisa      = "1.16.2"      # pip (apt python3-pyvisa 1.14.1 eski). `import visa` değil `import pyvisa`
+pyvisa_py   = "0.8.1"       # saf Python VISA arka ucu (NI-VISA gerekmez)
+pyvisa_sim  = "0.7.1"       # donanımsız SCPI cihaz benzetimi (test seti için)
+rsinstrument = "1.132.0"
+
+[em_benzetim]
+openems     = "0.37.0"
+meep        = "1.35.1"      # conda-forge (pymeep); PyPI'da yok
+pynec       = "2.4.0"       # NEC2 tel anten benzetimi (GPL-3.0)
+radarsimpy  = "15.5.0"      # pip ile kurulmaz: derlenmiş modül klasörü projeye kopyalanır; lisanssız "free tier" sınırlı, NumPy >= 2.0
+
+[fpga]
+rfsoc_pynq  = "4.0.0"       # dogrula: PYNQ ve Vivado sürüm eşleşmesi kart belgesinden kontrol edilmeli
+
+[ayri_ortamlar]
+# Ana ortamla çakışan araçlar ayrı conda ortamında tutulur
+krakensdr_heimdall = "python 3.9.7, numba 0.56.4, scipy 1.9.3 (heimdall_daq_fw README). NumPy 2.5 ile uyumsuz"
