@@ -51,6 +51,7 @@ UZANTILAR = {
 }
 
 AZAMI_BOYUT = 512 * 1024  # bayt; daha büyük dosyalar atlanır (veri, üretilmiş kod vb.)
+AZAMI_DEFTER_BOYUTU = 30 * 1024 * 1024  # defterler çıktı/görsel yüzünden büyük; çıktılar atıldıktan sonra sınır uygulanır
 ATLANACAK_KLASORLER = {".git", "__pycache__", "build", "dist", ".ipynb_checkpoints", "node_modules"}
 
 
@@ -110,7 +111,8 @@ def defteri_metne_cevir(ham: str) -> str:
 
 
 def dosyayi_oku(yol: Path) -> str | None:
-    if yol.stat().st_size > AZAMI_BOYUT:
+    defter = yol.suffix.lower() == ".ipynb"
+    if yol.stat().st_size > (AZAMI_DEFTER_BOYUTU if defter else AZAMI_BOYUT):
         return None
     ham = yol.read_bytes()
     if b"\x00" in ham[:8192]:
@@ -119,10 +121,12 @@ def dosyayi_oku(yol: Path) -> str | None:
         metin = ham.decode("utf-8")
     except UnicodeDecodeError:
         metin = ham.decode("latin-1")
-    if yol.suffix.lower() == ".ipynb":
+    if defter:
         try:
             metin = defteri_metne_cevir(metin)
         except (json.JSONDecodeError, TypeError):
+            return None
+        if len(metin.encode("utf-8")) > AZAMI_BOYUT:
             return None
     return metin if metin.strip() else None
 

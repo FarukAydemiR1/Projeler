@@ -352,3 +352,38 @@ ref = "v2.4.0"
 lisans = "GPL-2.0 (PyPI PyNEC: GPL-3.0-only)"
 kategori = "em"
 dahil = ["PyNEC/example/**", "PyNEC/tests/**", "necpp/example/**", "README.md", "necpp/README.md"]
+
+# --- 20.11.2026: eksikler araştırması sonrası eklenenler ---
+
+[[depo]]
+ad = "libiio-wiki"
+url = "https://github.com/analogdevicesinc/libiio.wiki.git"
+ref = "HEAD"
+lisans = "libiio projesi (LGPL-2.1-or-later); wiki için ayrı lisans belirtilmemiş"
+kategori = "sdr"
+dahil = ["libiio_0_to_1.md", "Home.md", "releases.md"]   # 0.x -> 1.0 API geçiş rehberi (yeni API; biz 0.26 kullanıyoruz)
+
+[[depo]]
+ad = "gr-pdw"
+url = "https://github.com/gtri/gr-pdw.git"
+ref = "HEAD"
+lisans = "GPL-3.0"
+kategori = "df"   # darbe tespiti ve PDW
+dahil = ["python/*.py", "apps/*.py", "apps/*.grc", "examples/*.py", "examples/*.grc", "grc/*.yml", "README.md", "examples/README"]
+# DİKKAT: GNU Radio 3.8 OOT (SWIG). 3.10'da derlenmez; Python bloklarının mantığı geçerli, yapı 3.10'a taşınmalı.
+
+[[depo]]
+ad = "radarsimnb"
+url = "https://github.com/radarsimx/radarsimnb.git"
+ref = "HEAD"
+lisans = "GPL-3.0 (defterler); radarsimpy modülü ayrı lisanslı (free tier sınırlı)"
+kategori = "radar"
+dahil = ["notebooks/*.ipynb", "README.md", "requirements.txt"]
+
+[[depo]]
+ad = "pulse-pdw-simulator"
+url = "https://github.com/zenoxml/pulse.git"
+ref = "HEAD"
+lisans = "Apache-2.0"
+kategori = "df"
+dahil = ["src/**", "tests/*.py", "README.md"]

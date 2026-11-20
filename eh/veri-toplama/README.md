@@ -7,7 +7,7 @@ Amaç: Yerel yapay zekâ modeline **hangi programı kullanacağını, nasıl kur
 | Dosya | Ne işe yarar |
 |---|---|
 | `surumler.toml` | Laboratuvarın **sabit yazılım sürüm seti**. Model yalnızca bu sürümlerin belgesini ve kodunu öğrenir. |
-| `kaynaklar.toml` | İndirilecek 43 açık kaynak depo: hangi sürüm etiketi, hangi klasörler, lisans ve kategori. |
+| `kaynaklar.toml` | İndirilecek 47 açık kaynak depo: hangi sürüm etiketi, hangi klasörler, lisans ve kategori. |
 | `elle-indirilecekler.md` | Git ile indirilemeyen PDF ve web belgeleri: ölçüm cihazlarının SCPI kılavuzları, RAG ve Türkçe terim kaynakları. |
 | `topla.py` | Toplama betiği. Depoları indirir, belge/örnek/test/not defteri dosyalarını seçer, her dosyayı sürüm etiketli bir JSONL kaydına çevirir. |
 | `laboratuvar-yapilacaklar.md` | Yalnızca laboratuvarda üretilebilecek veriler: kalibrasyon, kablo kayıp tabloları, PDW ve darbe ayrıştırma örnekleri, terim listesi. |

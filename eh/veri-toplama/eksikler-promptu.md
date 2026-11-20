@@ -19,6 +19,28 @@
 
 Laboratuvarda üretilecekler için: `laboratuvar-yapilacaklar.md`.
 
+## Durum (20.11.2026, Claude Research sonucu + kendi doğrulamamız)
+
+| # | Durum | Ne yapıldı |
+|---|---|---|
+| 1 | Kapandı (elle) | Sayfalar `elle-indirilecekler.md`'de. Wiki Cloudflare arkasında, tarayıcıdan PDF alınacak. Eski sayfalar işaretlendi |
+| 2 | Kısmen | `gr-pdw` (GPL-3.0, **GNU Radio 3.8 OOT**; 3.10'a taşınmalı) ve `pulse-pdw-simulator` (Apache-2.0) toplamaya eklendi. Ders materyali niteliğinde CFAR + PDW kodu hâlâ yok. Laboratuvar görevi 9 önemini koruyor |
+| 3 | Kapandı (elle) | TEXBAT ve FGI-SpoofRepo linkleri, formatları, lisansları doğrulandı. Yeniden dağıtım yasak; RAG'e veri değil talimat konacak. Resmi GNSS-SDR yapılandırması yok, laboratuvarda yazılacak |
+| 4 | Kapandı | RadChar: Kaggle, CC BY-NC-SA 4.0, HDF5 |
+| 5 | Kapandı | radarsimpy 15.5.0 (pip yok, free tier sınırlı); örnek defterler `radarsimnb` olarak toplamaya eklendi |
+| 6 | Büyük ölçüde | libiio 0→1 rehberi `libiio-wiki` olarak toplanıyor. bladeRF 2.0, PyVISA, GNU Radio porting guide'lar listelendi. TorchSig 1.1→2.0 rehberinin içeriği ve UHD `multi_usrp` 3→4 kod rehberi bulunamadı |
+| 7 | Açık | Yalnızca pip download linki doğrulandı (çalışıyor). Diğerleri sunucu kurulumu sırasında belgelenecek |
+| 8 | Kapandı | llama-server: `--embedding`, `--pooling {none,mean,cls,last,rank}`, `--rerank`; uç noktalar `/v1/embeddings`, `/v1/rerank`. GGUF: `ggml-org/bge-m3-Q8_0-GGUF`, `gpustack/bge-reranker-v2-m3-GGUF`, `Qwen/Qwen3-Embedding-0.6B-GGUF` |
+| 9 | Kısmen | Sürümler (PyPI): Unsloth 2026.11.7 (Apache-2.0), LLaMA-Factory 0.9.5 (Apache-2.0), Axolotl 0.21.1. QLoRA yapılandırması ekran kartı gelince yazılacak |
+| 10 | Açık | gr-pdw'nin `virtual_pdw.grc` ve `qa_*.py` dosyaları donanımsız test için örnek. Test seti bizim tarafımızdan yazılacak |
+| 11 | Açık | Türkçe DSP/RF terim sözlüğü bulunamadı. Ekip kendi `terimler.md` listesini tutacak |
+| 12 | Kapandı | HF model kartları: bge-m3 MIT, bge-reranker-v2-m3 Apache-2.0, multilingual-e5-large/base MIT, nomic-embed-text-v2-moe Apache-2.0, Qwen3-Embedding-0.6B ve Qwen3-Reranker-0.6B Apache-2.0 |
+
+**Ek bulgular**
+- **libiio v1.0.0 21.09.2026'da çıktı.** README'ye göre v0.x programları v1.0 üzerinde uyumluluk katmanıyla çalışır. Ubuntu 26.04 ve pyadi-iio hâlâ 0.26'da; sabit sette 0.26 kalıyor.
+- **Open WebUI 0.13.4'ün lisansı "Open WebUI License"** (özel lisans, marka koruma şartları var). Kurumsal kullanım öncesi hukuk birimine gösterilmeli.
+- `topla.py` düzeltildi: Jupyter defterleri artık çıktıları atıldıktan sonra boyut sınırına tabi. Önceden büyük defterler (radarsimnb'de 36 defterin 14'ü) atlanıyordu.
+
 ## Prompt
 
 ```
