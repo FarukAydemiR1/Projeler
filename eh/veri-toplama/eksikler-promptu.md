@@ -80,3 +80,39 @@ Bilgi bankası Open WebUI + llama.cpp üzerinde çalışacak. Aşağıdaki 12 ba
 
 KURALLAR: Kaynak uydurma. Her link, belgenin kendisine gitsin (ana sayfa değil). Doğrulayamadığın her şeye "DOĞRULANAMADI" yaz. Her satıra lisans ekle. Karıştırıcı yapımına yönelik içerik verme. Verici içeren örneklerde yalnızca kablolu, zayıflatıcılı veya dummy load'lu düzenekleri kabul et. Arşivlenmiş ya da 3 yıldan uzun süredir güncellenmeyen depoları "ESKİ" diye işaretle.
 ```
+
+## Prompt 2 (20.11.2026): kalan açıklar
+
+```
+Bir Ar-Ge laboratuvarı için yerel bir yapay zekâ modeline SDR, RF ve sinyal işleme kodlamasını öğretecek kaynakları topluyorum. Önceki araştırmada bulunamayan aşağıdaki 10 konuyu araştır. Sabit yığın (bunlar için ayrıca araştırma yapma): GNU Radio 3.10.12.0 · UHD 4.11.0.0 · libiio 0.26 · pyadi-iio 0.0.21 · GNSS-SDR 0.0.22 · NumPy 2.5.5 · SciPy 1.18.1 · PyTorch 2.15.0 · TorchSig 2.2.0 · PyVISA 1.16.2 · Ubuntu 26.04 · Python 3.12 · llama.cpp · Open WebUI 0.13.x.
+
+ŞUNLARI ZATEN BİLİYORUM, TEKRAR ETME: gr-pdw (GTRI, GNU Radio 3.8), zenoxml/pulse, radarsimnb, RadChar, TEXBAT ve FGI-SpoofRepo indirme sayfaları, libiio_0_to_1 wiki, bladeRF 2.0 sürüm notları, PyVISA CHANGES, GNU Radio 3.8/3.9/3.10 OOT porting guide'ları, bge-m3/e5/Qwen3 embedding lisansları, llama-server --embedding/--rerank bayrakları.
+
+1) CFAR VE DARBE TESPİTİ DERS MATERYALİ: Üniversite derslerinden (MIT OCW, Georgia Tech, NPS, TU Delft, ODTÜ vb.), kitap eklerinden (Richards "Fundamentals of Radar Signal Processing", Mahafza "Radar Systems Analysis and Design Using MATLAB", Adamy, Wiley "Electronic Warfare Receivers and Receiving Systems") veya resmi araç örneklerinden (MathWorks örnek sayfaları, scipy/numpy tabanlı defterler) CA-CFAR, OS-CFAR, darbe kenarı tespiti, TOA/PW/PRI ölçümü ve PRI histogramı (CDIF/SDIF) anlatan, ÇALIŞAN Python veya MATLAB kodu içeren kaynakları bul. Kitap kodlarının resmi indirme sayfasını ve lisansını yaz.
+
+2) GNSS-SDR İLE KAYITLI VERİ İŞLEME: GNSS-SDR'ın resmi "my first position fix" ve dosya kaynağından işleme eğitimleri; int16 karmaşık (ishort / cshort) 25 Msps veriyi ve 8-bit gerçel 26 MHz veriyi işleyen yapılandırma örnekleri (gnss-sdr.org belgeleri, conf/ klasöründeki dosya adları). TEXBAT veya FGI-SpoofRepo ile GNSS-SDR kullanan yayın veya depolar. GNSS-SDR'ın aldatma tespiti ile ilgili ayarları (ör. spoofing detection / OSNMA / RAIM parametreleri) ve belge linkleri.
+
+3) TORCHSIG VE UHD GEÇİŞ AYRINTILARI: (a) "TorchSig v1.1.0 -> v2.0.0 Migration Guide"ın gerçek konumu (docs, wiki, GitHub sürüm notu) ve içerdiği eski→yeni kod örnekleri. TorchSig 2.x'te veri seti oluşturma, dönüşümler ve eğitim döngüsünün resmi örnek defterlerinin dosya yolları. (b) UHD 3.15 → 4.x geçişinde multi_usrp Python API'sinde değişenler (uhd.usrp.MultiUSRP, recv_num_samps, stream_args), Ettus'un resmi Python API belgesi ve örnekleri.
+
+4) GNU RADIO WIKI ÇEVRİMDIŞI KOPYA: wiki.gnuradio.org'un toplu dışa aktarma yöntemi (MediaWiki Special:Export, XML dump, API), wiki içeriğinin lisansı, sayfaların GitHub'da (gnuradio/gnuradio-wiki vb.) bir aynası veya docs.gnuradio.org gibi indirilebilir bir alternatifi olup olmadığı. GNU Radio 3.10 Python API belgesinin (Sphinx) çevrimdışı indirme yolu.
+
+5) ÇEVRİMDIŞI KURULUM (resmi belgelerle): pip download + --no-index --find-links; apt-offline, apt-mirror veya aptly ile Ubuntu 26.04 paket aynası; conda-pack; radioconda çevrimdışı yükleyici; uhd_images_downloader ve UHD_IMAGES_DIR; huggingface-cli download + HF_HUB_OFFLINE; Open WebUI'nin internetsiz çalıştırılması (embedding modelinin önceden indirilmesi, telemetri ve dış bağlantıların kapatılması için ortam değişkenleri).
+
+6) İNCE AYAR UYGULAMASI: 16 GB VRAM (NVIDIA RTX A4000, Ampere) üzerinde Qwen2.5-Coder-7B veya Qwen3-8B gibi bir kod modeline QLoRA uygulamak için Unsloth ve LLaMA-Factory'nin resmi örnek yapılandırma dosyaları veya defterleri; "messages" JSONL veri formatı belgesi; LoRA birleştirme ve llama.cpp convert_hf_to_gguf.py + llama-quantize adımları. 300–1000 örneklik küçük veri setlerinde önerilen epoch, öğrenme oranı, LoRA rank değerleri ve aşırı öğrenmeyi önleme önerileri (resmi belgeler veya hakemli yayınlar). Axolotl'un lisansı.
+
+7) DONANIMSIZ SDR KODU TESTİ: pyadi-iio, UHD Python veya SoapySDR için sahte (mock) cihaz sınıfı kullanan açık test örnekleri; pyadi-iio'nun kendi test altyapısındaki emülasyon (ör. iio-emu, libiio xml context) ve belgesi; PyVISA-sim YAML cihaz tanımı örnekleri (SCPI cihaz benzetimi); GNU Radio'da vector_source/file_source ile QA testi yazma belgesi. Kod üretimini pytest ile otomatik değerlendiren açık çerçeveler (BigCodeBench, DS-1000, EvalPlus) ve kendi testlerimizi eklemek için belgeleri.
+
+8) TÜRKÇE TERİMLER: Sayısal sinyal işleme, haberleşme, RF, anten ve radar için Türkçe-İngilizce terim listeleri: TDK "Bilim ve Sanat Terimleri Ana Sözlüğü" (terim.tdk / sozluk.gov.tr) elektronik/haberleşme alanı; TÜBA Türkçe Bilim Terimleri Sözlüğü; EMO yayınları; üniversite ders notlarındaki terim ekleri (ODTÜ EE, İTÜ, Hacettepe); Türkçe yazılmış sinyal işleme veya radar ders kitaplarının terim dizinleri. Erişilebilir ve indirilebilir olanları linki ve lisansıyla ver.
+
+9) OPEN WEBUI LİSANSI: Open WebUI'nin güncel "Open WebUI License" metni, BSD-3'ten ne zaman ve nasıl değiştiği, kurum içi (ticari olmayan, 50 kullanıcıdan az) kullanımda hangi şartları getirdiği (marka/logo koruma, kullanıcı sayısı eşiği vb.). Aynı işi gören ve izin verici lisanslı alternatifler (ör. AnythingLLM, LibreChat, LobeChat) ve lisansları.
+
+10) SİNYAL İSTİHBARATI / EH İÇİN KAMUYA AÇIK EĞİTİM VERİ SETLERİ (yalnızca alıcı tarafı): RadioML 2016/2018, Sig53, WidebandSig53, RFUAV, DroneRF, CRAWDAD, POWDER veri setleri ve benzerleri; indirme linkleri, boyut, format ve lisans. Ticari olmayan (NC) lisansları ayrıca işaretle.
+
+ÇIKTI:
+- En başa 10 maddelik özet.
+- Her başlık için tablo: Kaynak | Tür | Sürüm | Link (doğrudan sayfa) | Lisans | Son güncelleme | Not.
+- Sonda "Hâlâ bulunamayanlar" listesi.
+- Türkçe yaz.
+
+KURALLAR: Kaynak uydurma. Her link belgenin kendisine gitsin (ana sayfa değil). Doğrulayamadığın her şeye "DOĞRULANAMADI" yaz. Her satıra lisans ekle. Arşivlenmiş veya 3 yıldan uzun süredir güncellenmeyen depoları "ESKİ" diye işaretle. Karıştırıcı yapımına yönelik içerik verme. Verici içeren örneklerde yalnızca kablolu, zayıflatıcılı veya dummy load'lu düzenekleri kabul et. Bütçe yetmezse 1, 2, 3, 6 ve 7'yi eksiksiz yap, diğerlerini kısalt.
+```
