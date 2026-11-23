@@ -1,0 +1,15 @@
+[Unit]
+Description=Gömme önbelleği (127.0.0.1:8084 -> llama-embed 8082)
+After=network.target llama-embed.service
+Wants=llama-embed.service
+
+[Service]
+Type=simple
+User=ai-server
+ExecStart=/usr/bin/python3 /usr/local/lib/eh/embed_onbellek.py --dinle 127.0.0.1 --port 8084 --hedef http://127.0.0.1:8082 --sinir 200000
+Restart=always
+RestartSec=10
+MemoryMax=4G
+
+[Install]
+WantedBy=multi-user.target
