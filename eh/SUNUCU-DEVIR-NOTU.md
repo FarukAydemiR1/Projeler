@@ -31,7 +31,9 @@ Bu not, yapay zekâ sunucusunda çalışan Claude Code oturumunun önceki çalı
 - **API anahtarını (`/etc/llama/api-key`) ve WiFi şifresini okuma, yazma, ekrana basma.**
 - Gizlilik dereceli bilgi bu sunucuya konmaz (sunucu internete ve Tailscale'e bağlı).
 - Karıştırıcı (jammer) yapımına yönelik içerik yok. Verici deneyleri yalnızca kablolu, zayıflatıcılı veya dummy load'lu düzenekte (5809 sayılı Kanun).
-- `/depo/models`, `/depo/egitim-verisi`, disk bölümleri, fstab ve ağ ayarlarında geri dönüşü zor işlem yapmadan önce kullanıcıya ne yapılacağını yaz ve onay al. Önemli değişiklikten önce `sudo tar czf /depo/yedek-etc-$(date +%F).tgz /etc`.
+- **Onay bekleme, işi yap.** Kurulum, servis açma/kapama/yeniden başlatma, paket kurma, dosya yazma, betik yazma, indirme gibi işleri sormadan yap; sonunda kısa bir özet ver.
+- **Yalnızca şu durumlarda önce sor:** `/depo/models` veya `/depo/egitim-verisi` altında **silme**; disk bölümlendirme/biçimlendirme; `fstab` değişikliği; uzaktan bağlantıyı koparabilecek ağ değişikliği (`netplan apply`, Tailscale ayarı). Bunların dışında kullanıcıyı bekletme.
+- Sistem ayarı değiştirmeden önce `/etc` yedeği al: `sudo tar czf /depo/yedek-etc-$(date +%F).tgz /etc && sudo chmod 600 /depo/yedek-etc-*.tgz` (yedekte gizli bilgiler var).
 - Kullanıcı Türkçe konuşur; kısa ve sade Türkçe kullan.
 - tmux istemiyor; uzun işler için `nohup ... &` veya systemd.
 - Commit ve PR metinlerine model adı yazma.
