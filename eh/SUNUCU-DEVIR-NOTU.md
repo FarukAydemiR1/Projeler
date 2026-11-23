@@ -21,6 +21,10 @@ Bu not, yapay zekâ sunucusunda çalışan Claude Code oturumunun önceki çalı
 |---|---|---|---|
 | `llama-server.service` | Qwen3-Coder-30B | 8080 | `-t 12 --numa distribute -c 32768 --jinja --spec-type ngram-mod -fa off`, API anahtarı dosyadan |
 | `llama-gptoss.service` | gpt-oss-120b MXFP4 (`/depo/models/gpt-oss-120b/gpt-oss-120b-MXFP4.gguf`, 59 GiB) | 8081 | `-t 12 --numa distribute -c 32768 --jinja -fa on --temp 1.0 --top-p 1.0`; ExecStartPre `numactl --interleave=all cat` ile önyükleme, TimeoutStartSec=1200 |
+| `llama-embed.service` | bge-m3 Q8_0 (`~/models/bge-m3-q8_0.gguf`) | 8082 | `--embedding --pooling cls -t 4 -c 8192 -ub 8192`, yalnız 127.0.0.1, API anahtarı yok |
+| `llama-rerank.service` | bge-reranker-v2-m3 Q8_0 (`~/models/`) | 8083 | `--rerank -t 4 -c 8192 -ub 8192`, yalnız 127.0.0.1, API anahtarı yok |
+| `open-webui.service` | Open WebUI 0.13.4 (uv, Python 3.11, `~/open-webui/venv`) | 3000 | yalnız 127.0.0.1; ayarlar `/etc/open-webui.env` (600), veri `/data/open-webui`, `DEFAULT_USER_ROLE=pending`, hibrit arama + harici reranker |
+| `open-webui-tailscale.service` | socat yönlendirme | 100.92.128.33:3000 | Tailscale IP → 127.0.0.1:3000; LAN IP'den erişim yok |
 
 - llama.cpp: `/home/ai-server/llama.cpp/build/bin/`. Yeni bayrak adları: `--spec-type {draft-simple, ngram-mod}`, `--spec-draft-n-max`. Taslak model ile spekülatif çözme MoE'de 2,5 kat yavaş; ngram-mod daha iyi.
 - gpt-oss hız ~7–8 t/s; reasoning Low/Medium önerilir.
@@ -51,13 +55,8 @@ Depo: `FarukAydemiR1/Projeler`, dal `claude/ecstatic-planck-i06c11` (PR #6). Dos
 
 ## Sıradaki işler (sırayla)
 
-1. Depoyu `~/lab` altına indir: `git clone -b claude/ecstatic-planck-i06c11 https://github.com/FarukAydemiR1/Projeler.git` (depo gizliyse `gh auth login` gerekir).
-2. Toplama: `cd ~/lab/Projeler/eh/veri-toplama && nohup python3 topla.py --hedef /depo/egitim-verisi > /depo/egitim-verisi-toplama.log 2>&1 &`. Beklenen: 51 kaynak, hata 0. Önceki denemelerde ~4.000+ kayıt, ~1,5 GB ham indirme. Bittiğinde `LISANSLAR.md` kontrol edilir.
-3. `apt update && apt upgrade` (toplama bitince; çekirdek güncellenirse yeniden başlat ve servisleri doğrula).
-4. Kablolu ağ yedeği (`50-kablo.yaml`) kurulmadıysa kur.
-5. Embedding: `ggml-org/bge-m3-Q8_0-GGUF` indir, ayrı llama-server servisi (`--embedding --pooling cls` veya modelin varsayılanı; port 8082). İsteğe bağlı reranker `gpustack/bge-reranker-v2-m3-GGUF` (`--rerank`, port 8083). Servis adlarını `llama-*` diye ver.
-6. Open WebUI kur (lisans: Open WebUI License; markayı değiştirme). Embedding motoru OpenAI uyumlu yerel uç nokta, LLM olarak 8080/8081. `OFFLINE_MODE` sonraya.
-7. `kayitlar/*.jsonl` içeriğini Open WebUI bilgi tabanlarına kategori bazında (sdr, dsp, ml, gnss, radar, df, olcum, em, fpga, yayilim) yükleyen betiği yaz. Kod dosyaları bölünmeden yüklensin; her parçanın başında kaynak, sürüm ve lisans etiketi olsun.
+1–6. **Tamamlandı (23.11.2026).** Toplama: 51 kaynak, 4.229 kayıt, hata 0, ham 2,1 GB (`/depo/egitim-verisi`). apt upgrade yapıldı; yeni çekirdek 7.0.0-44 `apt upgrade` ile gelmedi (`full-upgrade` + yeniden başlatma, kullanıcı laboratuvardayken yapılacak). `50-kablo.yaml` yazıldı (enp0s25, enp5s0 DHCP, optional), `netplan apply` yapılmadı; yeniden başlatmada devreye girer. Not: `llama-server` hız testi (llama-bench) için durdurulup yeniden başlatıldı. Test sonucu: uzun bağlamda `-fa on` üretimi yarıya düşürüyor (16K'da 4,1 → 1,8 t/s); Qwen'de `-fa off` kalacak.
+7. **Sürüyor:** `eh/veri-toplama/owui_yukle.py` yazıldı (standart kütüphane; kategori başına `EH-<kategori>` bilgi tabanı; her kayıt tek `.md`, başında kaynak/sürüm/lisans/kaynak_link; durum dosyası `/depo/egitim-verisi/owui-durum.json`). Lisanssız kaynaklar atlanır (360 kayıt). Kuru deneme: 3.766 belge, 32,6 MB. Gerçek yükleme için Open WebUI'de API anahtarları açılıp `OWUI_API_KEY` tanımlanmalı. `standart` kategorisi (gr-difi, sigmf-python) de yüklenecek.
 8. Donanımsız test seti iskeleti (22 kodlama görevi; pytest-libiio + iio-emu, PyVISA-sim, gr_unittest).
 
 ## Açık sorunlar
