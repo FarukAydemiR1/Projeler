@@ -243,6 +243,8 @@ def main() -> int:
                     help="ağa bağlanma; belgeleri istenirse KLASOR'e yaz, yalnız sayıları göster")
     ap.add_argument("--sahipsiz", choices=["listele", "sil"],
                     help="bilgi tabanına bağlı olmayan yüklenmiş dosyaları listele veya sil; yükleme yapmaz")
+    ap.add_argument("--beklenen", type=int,
+                    help="--sahipsiz sil ile: sahipsiz dosya sayısı bu değilse hiçbir şey silme")
     a = ap.parse_args()
 
     if a.sahipsiz:
@@ -258,6 +260,10 @@ def main() -> int:
             print(f"{d['id']}  {d['filename']}")
         print(f"sahipsiz dosya: {len(liste)}")
         if a.sahipsiz == "sil":
+            if a.beklenen is None or a.beklenen != len(liste):
+                print(f"HATA: silinmedi. --beklenen {a.beklenen} ile bulunan {len(liste)} tutmuyor "
+                      "(sil için --beklenen zorunlu).", file=sys.stderr)
+                return 1
             for d in liste:
                 owui.dosya_sil(d["id"])
             print(f"silindi: {len(liste)}")
