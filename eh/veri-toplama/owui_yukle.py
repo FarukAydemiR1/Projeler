@@ -64,13 +64,27 @@ KATEGORI_ACIKLAMA = {
 DIL_ETIKETI = {"c-baslik": "c", "cpp-baslik": "cpp", "grc-yaml": "yaml"}
 
 
+def surum(r: dict) -> str:
+    """Kısa sürüm: etiket varsa etiket, yoksa commit'in ilk 12 hanesi."""
+    ref = r.get("ref") or ""
+    return ref if ref and ref != "HEAD" else (r.get("commit") or "")[:12]
+
+
+def belge_meta(r: dict) -> dict:
+    """Open WebUI'nin her parçaya kopyaladığı dosya meta verisi.
+
+    RAG_SOURCE_METADATA_KEYS=kaynak,surum,lisans,kaynak_link ile bu alanlar
+    sohbette modele <source ...> öznitelikleri olarak gider.
+    """
+    return {"kaynak": r["kaynak"], "surum": surum(r), "lisans": r["lisans"], "kaynak_link": r["kaynak_link"]}
+
+
 def belge_olustur(r: dict) -> str:
     """Kaydı başlıklı tek bir Markdown belgesine çevirir."""
     baslik = (
-        f"<!-- EH-RAG kaydi {r['id']} -->\n"
         f"# {r['kaynak']}: {r['yol']}\n\n"
         f"- kaynak: {r['kaynak']}\n"
-        f"- surum: {r.get('surum_seti', '')} (ref {r.get('ref', '')}, commit {r.get('commit', '')[:12]})\n"
+        f"- surum: {surum(r)} (sürüm seti {r.get('surum_seti', '')}, commit {r.get('commit', '')[:12]})\n"
         f"- lisans: {r['lisans']}\n"
         f"- kaynak_link: {r['kaynak_link']}\n"
         f"- kategori: {r['kategori']} · tur: {r['tur']} · dil: {r['dil']}\n\n"
@@ -129,9 +143,14 @@ class OWUI:
         y = self._istek("POST", "/api/v1/knowledge/create", {"name": ad, "description": aciklama})
         return y["id"]
 
-    def dosya_yukle(self, ad: str, metin: str) -> str:
+    def dosya_yukle(self, ad: str, metin: str, meta: dict | None = None) -> str:
         sinir = uuid.uuid4().hex
-        govde = (
+        meta_alani = (
+            f"--{sinir}\r\n"
+            f'Content-Disposition: form-data; name="metadata"\r\n\r\n'
+            f"{json.dumps(meta, ensure_ascii=False)}\r\n"
+        ).encode() if meta else b""
+        govde = meta_alani + (
             f"--{sinir}\r\n"
             f'Content-Disposition: form-data; name="file"; filename="{ad}"\r\n'
             f"Content-Type: text/markdown\r\n\r\n"
@@ -232,8 +251,9 @@ def main() -> int:
             print("HATA: OWUI_API_KEY ortam değişkeni yok.", file=sys.stderr)
             return 2
         owui = OWUI(a.url, anahtar)
-        bt = {ad: i for ad, i in owui.bilgi_tabanlari().items() if ad.startswith(a.onek)}
-        liste = sahipsizler(owui, list(bt.values()))
+        # Bağlılık tüm bilgi tabanlarına göre belirlenir (yalnız --onek ile başlayanlara değil);
+        # böylece test veya başka bilgi tabanlarındaki dosyalar sahipsiz sayılmaz.
+        liste = sahipsizler(owui, list(owui.bilgi_tabanlari().values()))
         for d in liste:
             print(f"{d['id']}  {d['filename']}")
         print(f"sahipsiz dosya: {len(liste)}")
@@ -307,7 +327,7 @@ def main() -> int:
                 continue
             dosya_id = None
             try:
-                dosya_id = owui.dosya_yukle(dosya_adi(r), belge)
+                dosya_id = owui.dosya_yukle(dosya_adi(r), belge, belge_meta(r))
                 owui.dosya_ekle(bt_id, dosya_id)
             except Exception as e:  # noqa: BLE001 - bir belge hatası tümünü durdurmasın
                 if KOPYA_HATASI in str(e):
