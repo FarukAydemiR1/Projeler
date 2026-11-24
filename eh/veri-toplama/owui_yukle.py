@@ -150,6 +150,45 @@ class OWUI:
     def dosya_ekle(self, bt_id: str, dosya_id: str):
         self._istek("POST", f"/api/v1/knowledge/{bt_id}/file/add", {"file_id": dosya_id})
 
+    def bt_dosyalari(self, bt_id: str) -> dict[str, str]:
+        """Bilgi tabanındaki dosyalar: dosya adı -> dosya kimliği."""
+        sonuc, sayfa = {}, 1
+        while True:
+            y = self._istek("GET", f"/api/v1/knowledge/{bt_id}/files?page={sayfa}&limit=500")
+            ogeler = y.get("items", [])
+            for d in ogeler:
+                sonuc.setdefault(d["filename"], d["id"])
+            if not ogeler or sayfa * 500 >= y.get("total", 0):
+                return sonuc
+            sayfa += 1
+
+    def tum_dosyalar(self) -> list[dict]:
+        sonuc, sayfa = [], 1
+        while True:
+            y = self._istek("GET", f"/api/v1/files/?page={sayfa}&content=false")
+            ogeler = y.get("items", []) if isinstance(y, dict) else (y or [])
+            sonuc += ogeler
+            if not ogeler or (isinstance(y, dict) and len(sonuc) >= y.get("total", 0)):
+                return sonuc
+            sayfa += 1
+
+    def dosya_sil(self, dosya_id: str):
+        self._istek("DELETE", f"/api/v1/files/{dosya_id}")
+
+
+KOPYA_HATASI = "Duplicate content"
+
+
+def sahipsizler(owui: OWUI, bt_idleri: list[str]) -> list[dict]:
+    """Hiçbir bilgi tabanına bağlı olmayan, bu betiğin adlandırma biçimindeki dosyalar."""
+    bagli = set()
+    for bt_id in bt_idleri:
+        bagli |= set(owui.bt_dosyalari(bt_id).values())
+    return [
+        d for d in owui.tum_dosyalar()
+        if d["id"] not in bagli and d.get("filename", "").endswith(".md") and "__" in d.get("filename", "")
+    ]
+
 
 def kayitlari_oku(klasor: Path, kategoriler, kaynaklar, lisanssiz_al):
     secilen, atlanan = defaultdict(list), defaultdict(int)
@@ -183,7 +222,26 @@ def main() -> int:
     ap.add_argument("--durum", type=Path, default=Path("/depo/egitim-verisi/owui-durum.json"))
     ap.add_argument("--kuru", nargs="?", const="", metavar="KLASOR",
                     help="ağa bağlanma; belgeleri istenirse KLASOR'e yaz, yalnız sayıları göster")
+    ap.add_argument("--sahipsiz", choices=["listele", "sil"],
+                    help="bilgi tabanına bağlı olmayan yüklenmiş dosyaları listele veya sil; yükleme yapmaz")
     a = ap.parse_args()
+
+    if a.sahipsiz:
+        anahtar = os.environ.get("OWUI_API_KEY")
+        if not anahtar:
+            print("HATA: OWUI_API_KEY ortam değişkeni yok.", file=sys.stderr)
+            return 2
+        owui = OWUI(a.url, anahtar)
+        bt = {ad: i for ad, i in owui.bilgi_tabanlari().items() if ad.startswith(a.onek)}
+        liste = sahipsizler(owui, list(bt.values()))
+        for d in liste:
+            print(f"{d['id']}  {d['filename']}")
+        print(f"sahipsiz dosya: {len(liste)}")
+        if a.sahipsiz == "sil":
+            for d in liste:
+                owui.dosya_sil(d["id"])
+            print(f"silindi: {len(liste)}")
+        return 0
 
     secilen, atlanan = kayitlari_oku(a.kayitlar, set(a.kategori), set(a.kaynak or []), a.lisanssizlari_al)
     for neden, n in sorted(atlanan.items()):
@@ -215,7 +273,7 @@ def main() -> int:
             tekil = tekil[: a.sinir]
         bt_adi = f"{a.onek}{kat}"
         print(f"\n[{bt_adi}] {len(kayitlar)} kayıt, {len(tekil)} belge yüklenecek "
-              f"({sum(len(b) for _, b, _ in tekil) / 1e6:.1f} MB)")
+              f"({sum(len(b) for _, b, _ in tekil) / 1e6:.1f} MB)", flush=True)
 
         if owui is None:
             if a.kuru:
@@ -228,25 +286,48 @@ def main() -> int:
         bt_id = mevcut.get(bt_adi) or owui.bilgi_tabani_ac(bt_adi, KATEGORI_ACIKLAMA[kat])
         mevcut[bt_adi] = bt_id
         kat_durum = durum.setdefault(bt_id, {})
+        # Durum dosyasına yazılamadan kesilen önceki çalıştırmalardan kalan
+        # dosyalar yeniden yüklenmesin diye bilgi tabanındaki adlara da bakılır.
+        bt_dosya = owui.bt_dosyalari(bt_id)
         yuklenen = atlanan_eski = hata = 0
         t0 = time.time()
+
+        def kaydet():
+            a.durum.write_text(json.dumps(durum, ensure_ascii=False, indent=1))
+
         for i, (r, belge, h) in enumerate(tekil, 1):
+            yol = f"{r['kaynak']}/{r['yol']}"
             if kat_durum.get(r["id"], {}).get("ozet") == h:
                 atlanan_eski += 1
                 continue
+            if r["id"] not in kat_durum and dosya_adi(r) in bt_dosya:
+                kat_durum[r["id"]] = {"ozet": h, "dosya_id": bt_dosya[dosya_adi(r)], "yol": yol}
+                atlanan_eski += 1
+                kaydet()
+                continue
+            dosya_id = None
             try:
                 dosya_id = owui.dosya_yukle(dosya_adi(r), belge)
                 owui.dosya_ekle(bt_id, dosya_id)
             except Exception as e:  # noqa: BLE001 - bir belge hatası tümünü durdurmasın
+                if KOPYA_HATASI in str(e):
+                    # Aynı içerik bu bilgi tabanında zaten var; yeni yüklenen dosya sahipsiz kalır.
+                    kat_durum[r["id"]] = {"ozet": h, "dosya_id": bt_dosya.get(dosya_adi(r)), "yol": yol, "kopya": True}
+                    if dosya_id:
+                        durum.setdefault("_sahipsiz", []).append({"dosya_id": dosya_id, "yol": yol})
+                    atlanan_eski += 1
+                    kaydet()
+                    print(f"  zaten vardı (kopya içerik): {yol}", flush=True)
+                    continue
                 hata += 1
-                print(f"  HATA {r['kaynak']}/{r['yol']}: {e}", file=sys.stderr)
+                print(f"  HATA {yol}: {e}", file=sys.stderr, flush=True)
                 continue
-            kat_durum[r["id"]] = {"ozet": h, "dosya_id": dosya_id, "yol": f"{r['kaynak']}/{r['yol']}"}
+            kat_durum[r["id"]] = {"ozet": h, "dosya_id": dosya_id, "yol": yol}
             yuklenen += 1
+            kaydet()  # her belgeden sonra: kesilirse kopya yükleme olmasın
             if yuklenen % 10 == 0:
-                a.durum.write_text(json.dumps(durum, ensure_ascii=False, indent=1))
                 print(f"  {i}/{len(tekil)}  {(time.time() - t0) / yuklenen:.1f} s/belge", flush=True)
-        a.durum.write_text(json.dumps(durum, ensure_ascii=False, indent=1))
+        kaydet()
         toplam_hata += hata
         print(f"  yüklendi {yuklenen}, zaten vardı {atlanan_eski}, hata {hata}, "
               f"süre {time.time() - t0:.0f} s")
