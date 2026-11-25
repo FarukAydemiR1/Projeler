@@ -1,0 +1,37 @@
+$ python kod.py   # Python 3.14.4, sigmf 1.14.0, numpy 2.5.5, 2026-11-24T12:24:17Z
+{
+    "global": {
+        "core:author": "EH lab",
+        "core:datatype": "cf32_le",
+        "core:description": "Örnek kayıt",
+        "core:num_channels": 1,
+        "core:offset": 0,
+        "core:sample_rate": 2000000,
+        "core:sha512": "18790c279e0ca614c2b57a215fecc23a6c3d2d308ce77f314378cb2d1b0f413acd3a9cd353aa6da86ec9f51916925c7210f7dfabc0ef726779f8d44f227f03b1",
+        "core:version": "1.2.6"
+    },
+    "captures": [
+        {
+            "core:datetime": "2026-11-24T12:24:18.067209Z",
+            "core:frequency": 915000000,
+            "core:sample_start": 0
+        }
+    ],
+    "annotations": [
+        {
+            "core:comment": "ilgi çeken sinyal",
+            "core:freq_lower_edge": 914995000.0,
+            "core:freq_upper_edge": 915005000.0,
+            "core:sample_count": 200,
+            "core:sample_start": 100
+        }
+    ]
+}
+datatype: cf32_le
+sample_rate: 2000000
+örnek sayısı: 1024 dtype: complex64
+capture sayısı: 1 annotation sayısı: 1
+örnekler yazılanla aynı: True
+$ ls -l
+8192 kayit.sigmf-data
+886 kayit.sigmf-meta
