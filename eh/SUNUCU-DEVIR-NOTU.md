@@ -68,3 +68,12 @@ Depo: `FarukAydemiR1/Projeler`, dal `claude/ecstatic-planck-i06c11` (PR #6). Dos
 - Yedekleme yok (modeller, /depo).
 - Sabit yerel IP yok.
 - Hukuk onayı bekleyenler: GPL/NC lisanslı içerikle eğitim, Open WebUI lisansı, Tailscale ve Claude Code kullanımı için BT onayı.
+
+## İleride yapılacaklar (kullanıcı hatırlatma istedi, 25.11.2026)
+
+- **PC'leri bulut Claude oturumuna bağlama (MCP gerekmez):** Claude masaüstü uygulaması → Ayarlar → Claude Code → Remote Control'den bir klasör eklenir, uygulama açık kalır; oturum bağlantı ister, kullanıcı onaylar. Uygulama güncel olmalı; ev klasörünün kendisi veya gizli klasörlerin içi paylaşılamaz, bir alt klasör seçilir. Bir oturum tek bilgisayara bağlanır. Gizlilik dereceli veri bulunan veya kapalı ağdaki PC'ler bağlanmaz.
+- **CLI-Anything** (HKUDS, Apache-2.0, commit `34f5195`): programlara ajan için komut satırı arayüzü üreten Claude Code eklentisi. Sabit commit'ten kurulacak; `cli-hub` ve meta-skill kurulmayacak (kendi başına pip/npm paketi kuruyor); dış servis arayüzleri (Exa, Novita, Zoom vb.) kullanılmayacak. İlk deneme: FreeCAD arayüzü (yanma odası geometrisi).
+- **GLM-5.3-Flash:** owui yüklemesi bitince UD-IQ3_XXS (112 GiB), ayrı klasörde llama.cpp derlemesi, gpt-oss ile hız/kalite karşılaştırması (gpt-oss'u durdurmadan önce sor).
+- **Yeni donanım kararı:** Seçenekler `eh/donanim/yapay-zeka-kasasi.xlsx` (2× R9700 PC) ve Mac Studio M5 Max 128 GB (614 GB/s, gpt-oss-120b sığar; ince ayar MLX ile, CUDA yok). Karar: yalnız RAG/sohbet mi, ince ayar da mı.
+- Laboratuvarda: `full-upgrade` + yeniden başlatma (çekirdek 7.0.0-44), WiFi/kablo/servis kontrolü.
+- Yanma odası optimizasyonu soruları (yazılım, lisans, çözüm süresi, hedefler): kullanıcı yanıtlayacak.
